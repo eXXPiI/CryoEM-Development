@@ -1,3 +1,0 @@
-This is a test file to verify that the Git integration on this computer is working properly.
-
-Does this add?
