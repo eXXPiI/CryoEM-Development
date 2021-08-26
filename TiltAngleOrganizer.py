@@ -3,7 +3,8 @@
 # Program: TiltAngleOrganizer.py
 # Version: 0.1.0
 # Author: Jonathan Myers
-# Date: Mon Aug 23 16:53:57 2021
+# Date Created: Mon Aug 23 16:53:57 2021
+# Date Modified: Aug 26 2021
 # Purpose: Builds angle sorted image stack of form .st from .mrc images of 
 tomography samples for IMOD tomogram reconstruction.
 # Imports: re (regular expression) and os (operating system).
@@ -15,18 +16,31 @@ image data directory.
 
 ## Articles
 
-# Regular Expression Finder
-import re
-import os
-#import subprocess as sp
+def TiltAngleOrganizer():
+    import re
+    import os
+    #import subprocess as sp
+   
+    # Regular Expression:
+    regEx = '([a-zA-Z0-9-]*[_])?([0-9]+)[_]([-]?[0-9]+[\.][0-9]+)[_]([a-zA-Z0-9]+)[_]([0-9]+[\.][0-9]+[\.][0-9]+)'
+    patternFinder = re.compile(regEx)
+    
+    # Acquire Files From Directory
+    cwd = os.getcwd()
+    dataDirectory = os.chdir("../test")
+    dataFiles = os.listdir(dataDirectory)
+    dataLen = len(dataFiles)
+    
+    # Mine Filename Metadata
+    dataInfo = []
+    for i in range(dataLen):
+        dataInfo.append(*patternFinder.findall(dataFiles[i]))
+    
+    angles = [val[2] for val in dataInfo]
 
-# Regular Expression:
-dataDirectory = os.getcwd()
-dataFiles = os.listdir(dataDirectory)
 
-regEx = '([a-zA-Z0-9]*[_])? \
-    ([0-9]+)[_] \
-    ([-]?[0-9]+[\.][0-9]+)[_] \
-    ([a-zA-Z0-9]+)[_] \
-    ([0-9]+[.][0-9]+[.][0-9]+)'
-patternFinder = re.compile(regEx)
+# If Code Independent, Run; If Code Imported, Do Not Run
+if __name__ == '__main__':
+    TiltAngleOrganizer()
+
+# M02 End Program
