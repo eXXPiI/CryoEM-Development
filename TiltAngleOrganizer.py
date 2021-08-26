@@ -18,7 +18,15 @@ image data directory.
 # Regular Expression Finder
 import re
 import os
+#import subprocess as sp
 
-# Regular Expression: [.]*[_]
-finder
+# Regular Expression:
+dataDirectory = os.getcwd()
+dataFiles = os.listdir(dataDirectory)
 
+regEx = '([a-zA-Z0-9]*[_])? \
+    ([0-9]+)[_] \
+    ([-]?[0-9]+[\.][0-9]+)[_] \
+    ([a-zA-Z0-9]+)[_] \
+    ([0-9]+[.][0-9]+[.][0-9]+)'
+patternFinder = re.compile(regEx)
