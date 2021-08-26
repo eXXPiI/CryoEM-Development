@@ -61,7 +61,8 @@ def TiltAngleOrganizer():
     newstackCommand = " ".join(["newstack","-filei",imodInputFileName,
                                 "-ou",stackOutputFileName])
     sp.run(newstackCommand,shell=True)
-    sp.run("imod ",stackOutputFileName,shell=True)
+    imodCommand = " ".join(["imod",stackOutputFileName])
+    sp.run(imodCommand,shell=True)
     
 # If Code Independent, Run; If Code Imported, Do Not Run
 if __name__ == '__main__':
