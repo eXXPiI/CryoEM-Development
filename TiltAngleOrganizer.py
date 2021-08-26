@@ -27,8 +27,7 @@ def TiltAngleOrganizer():
     patternFinder = re.compile(''.join(regEx))
     
     # Acquire Files From Directory
-    cwd = os.getcwd()
-    dataDirectory = os.chdir("../test")
+    dataDirectory = os.getcwd()
     dataFiles = os.listdir(dataDirectory)
     dataLen = len(dataFiles)
     
@@ -52,7 +51,7 @@ def TiltAngleOrganizer():
     imodInputFile.close()
     
     # Control IMOD newstack Function
-    
+    sp.run("newstack -FileOfInputs sortedAngles.txt")
     
     
 # If Code Independent, Run; If Code Imported, Do Not Run
