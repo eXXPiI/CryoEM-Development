@@ -7,7 +7,7 @@
 # Date Modified: Aug 26 2021
 # Purpose: Builds angle sorted image stack of form .st from .mrc images of 
 tomography samples for IMOD tomogram reconstruction.
-# Imports: re (regular expression), os (operating system), and subprocess.
+# Imports: sys, re (regular expression), os (operating system), and subprocess.
 # Inputs/Arguments: Optional .mrc image data directory path or default working
 directory path.
 # Outputs/Returns: Angle sorted stack (.st) in optional directory path or
@@ -17,6 +17,7 @@ image data directory.
 # Articles
 
 def TiltAngleOrganizer():
+    import sys
     import re
     import os
     import subprocess as sp
@@ -24,8 +25,13 @@ def TiltAngleOrganizer():
     # Define User Variables
     imodInputFileName = "sortedAngles.txt"
     stackOutputFileName = "AngleSortedStack.st"
-    inputPath = input("Full Data Path: ")
-    etomoSelect = bool(int(input("Etomo- (Start, Do Not Start) == (1,0): ")))
+    inputPath = sys.argv[0]
+    if len(sys.argv) == 2:
+        etomoSelect = bool(int(sys.argv[1]))
+    else:
+        etomoSelect = False
+    #inputPath = input("Full Data Path: ")
+    #etomoSelect = bool(int(input("Etomo- (Start, Do Not Start) == (1,0): ")))
     
     # Regular Expression:
     regEx = ['([a-zA-Z0-9-]*[_])?','([0-9]+)[_]','([-]?[0-9]+[\.][0-9]+)[_]',
