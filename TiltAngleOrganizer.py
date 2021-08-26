@@ -21,9 +21,11 @@ def TiltAngleOrganizer():
     import os
     import subprocess as sp
     
-    # Define Names
+    # Define User Variables
     imodInputFileName = "sortedAngles.txt"
     stackOutputFileName = "AngleSortedStack.st"
+    inputPath = input("Full Data Path: ")
+    etomoSelect = bool(int(input("Etomo- (Start, Do Not Start) == (1,0): ")))
     
     # Regular Expression:
     regEx = ['([a-zA-Z0-9-]*[_])?','([0-9]+)[_]','([-]?[0-9]+[\.][0-9]+)[_]',
@@ -32,7 +34,7 @@ def TiltAngleOrganizer():
     
     # Acquire Files From Directory
     #dataDirectory = os.getcwd()
-    dataDirectory = os.chdir(input("Full Data Path: "))
+    dataDirectory = os.chdir(inputPath)
     dataFiles = os.listdir(dataDirectory)
     dataLen = len(dataFiles)
     
@@ -61,8 +63,10 @@ def TiltAngleOrganizer():
     newstackCommand = " ".join(["newstack","-filei",imodInputFileName,
                                 "-ou",stackOutputFileName])
     sp.run(newstackCommand,shell=True)
-    imodCommand = " ".join(["imod",stackOutputFileName])
-    sp.run(imodCommand,shell=True)
+    if etomoSelect == True:
+        imodCommand = " ".join(["imod",stackOutputFileName])
+        sp.run(imodCommand,shell=True)
+    
     
 # If Code Independent, Run; If Code Imported, Do Not Run
 if __name__ == '__main__':
