@@ -21,6 +21,10 @@ def TiltAngleOrganizer():
     import os
     import subprocess as sp
     
+    # Define Filenames
+    imodInputFileName = "sortedAngles.txt"
+    stackOutputFileName = "AngleSortedStack.st"
+    
     # Regular Expression:
     regEx = ['([a-zA-Z0-9-]*[_])?','([0-9]+)[_]','([-]?[0-9]+[\.][0-9]+)[_]',
              '([a-zA-Z0-9]+)[_]','([0-9]+[\.][0-9]+[\.][0-9]+)']
@@ -43,7 +47,7 @@ def TiltAngleOrganizer():
     sortedFiles = [dataFiles[index] for index in sortedAngleIndex]
     
     # Write To Text File For IMOD
-    imodInputFile = open("sortedAngles.txt",'w')
+    imodInputFile = open(imodInputFileName,'w')
     imodInputFile.write(str(dataLen))
     imodInputFile.write("\n")
     for index in range(dataLen):
@@ -54,7 +58,10 @@ def TiltAngleOrganizer():
     imodInputFile.close()
     
     # Control IMOD newstack Function
-    sp.run("newstack -filei sortedAngles.txt -ou AngleSortedStack.st")
+    newstackCommand = " ".join(["newstack","-filei",imodInputFileName,
+                                "-ou",stackOutputFileName])
+    sp.run(newstackCommand,shell=True)
+    sp.run("imod ",stackOutputFileName,shell=True)
     
 # If Code Independent, Run; If Code Imported, Do Not Run
 if __name__ == '__main__':
