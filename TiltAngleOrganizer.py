@@ -32,7 +32,7 @@ def TiltAngleOrganizer():
     
     # Acquire Files From Directory
     #dataDirectory = os.getcwd()
-    dataDirectory = os.chdir("../test")
+    dataDirectory = os.chdir(input("Full Data Path: "))
     dataFiles = os.listdir(dataDirectory)
     dataLen = len(dataFiles)
     
