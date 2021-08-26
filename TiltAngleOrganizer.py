@@ -25,9 +25,9 @@ def TiltAngleOrganizer():
     # Define User Variables
     imodInputFileName = "sortedAngles.txt"
     stackOutputFileName = "AngleSortedStack.st"
-    inputPath = sys.argv[0]
-    if len(sys.argv) == 2:
-        etomoSelect = bool(int(sys.argv[1]))
+    inputPath = str(sys.argv[1])
+    if len(sys.argv) == 3:
+        etomoSelect = bool(int(sys.argv[2]))
     else:
         etomoSelect = False
     #inputPath = input("Full Data Path: ")
