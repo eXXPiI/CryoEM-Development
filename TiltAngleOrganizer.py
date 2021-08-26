@@ -7,7 +7,7 @@
 # Date Modified: Aug 26 2021
 # Purpose: Builds angle sorted image stack of form .st from .mrc images of 
 tomography samples for IMOD tomogram reconstruction.
-# Imports: re (regular expression) and os (operating system).
+# Imports: re (regular expression), os (operating system), and subprocess.
 # Inputs/Arguments: Optional .mrc image data directory path or default working
 directory path.
 # Outputs/Returns: Angle sorted stack (.st) in optional directory path or
@@ -21,7 +21,7 @@ def TiltAngleOrganizer():
     import os
     import subprocess as sp
     
-    # Define Filenames
+    # Define Names
     imodInputFileName = "sortedAngles.txt"
     stackOutputFileName = "AngleSortedStack.st"
     
