@@ -17,7 +17,6 @@ image data directory.
 # Articles
 
 def TiltAngleOrganizer():
-    #%%
     import re
     import os
     import subprocess as sp
@@ -49,13 +48,13 @@ def TiltAngleOrganizer():
     imodInputFile.write("\n")
     for index in range(dataLen):
         imodInputFile.write(sortedFiles[index])
-        imodInputFile.write("\n")
+        imodInputFile.write("\n\n")
     imodInputFile.close()
     
     # Control IMOD newstack Function
     
-    #%%
-
+    
+    
 # If Code Independent, Run; If Code Imported, Do Not Run
 if __name__ == '__main__':
     TiltAngleOrganizer()
