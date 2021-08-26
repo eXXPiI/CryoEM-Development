@@ -51,7 +51,7 @@ def TiltAngleOrganizer():
     imodInputFile.close()
     
     # Control IMOD newstack Function
-    sp.run("newstack -FileOfInputs sortedAngles.txt")
+    sp.run("newstack -filei sortedAngles.txt -ou AngleStack.st")
     
     
 # If Code Independent, Run; If Code Imported, Do Not Run
