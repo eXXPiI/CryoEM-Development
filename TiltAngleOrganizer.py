@@ -9,9 +9,9 @@
 tomography samples for IMOD tomogram reconstruction.
 # Imports: sys, re (regular expression), os (operating system), and subprocess.
 # Inputs/Arguments: Optional .mrc image data directory path or default working
-directory path.
+directory path. Optional IMOD/Etomo start boolean for completed stack.
 # Outputs/Returns: Angle sorted stack (.st) in optional directory path or
-image data directory.
+image data directory. Sorted angle .rawtlt file and sorted data intermediate file.
 """
 
 # Articles
@@ -22,16 +22,12 @@ def TiltAngleOrganizer():
     import os
     import subprocess as sp
     
-    # Define User Variables
-    imodInputFileName = "sortedAngles.txt"
-    stackOutputFileName = "AngleSortedStack.st"
+    # Define Input Variables
     inputPath = str(sys.argv[1])
     if len(sys.argv) == 3:
         etomoSelect = bool(int(sys.argv[2]))
     else:
         etomoSelect = False
-    #inputPath = input("Full Data Path: ")
-    #etomoSelect = bool(int(input("Etomo- (Start, Do Not Start) == (1,0): ")))
     
     # Regular Expression:
     regEx = ['([a-zA-Z0-9-]*[_])?','([0-9]+)[_]','([-]?[0-9]+[\.][0-9]+)[_]',
@@ -52,7 +48,24 @@ def TiltAngleOrganizer():
     # Sort Files On Angle
     angles = [float(val[2]) for val in dataInfo]
     sortedAngleIndex = sorted(range(dataLen),key=lambda x:angles[x])
+    sortedAngles = [dataInfo[index][2] for index in sortedAngleIndex]
     sortedFiles = [dataFiles[index] for index in sortedAngleIndex]
+    
+    # Define Output Variables
+    if dataInfo[0][0] == "":
+        base = "Data"
+    else:
+        base = dataInfo[0][0]
+    navID = dataInfo[0][1]
+    
+    tiltOutputFileName = f"{base}_{navID}_sortedStack.rawtlt"
+    stackOutputFileName = f"{base}_{navID}_sortedStack.st"
+    imodInputFileName = f"{base}_{navID}_sortedData.txt"
+    
+    # Write Raw Tilt File for IMOD/Etomo
+    tiltOutputFile = open(tiltOutputFileName,'w')
+    tiltOutputFile.write("\n".join([str(a) for a in sortedAngles]))
+    tiltOutputFile.close()
     
     # Write To Text File For IMOD
     imodInputFile = open(imodInputFileName,'w')
