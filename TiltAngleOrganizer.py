@@ -58,17 +58,26 @@ def TiltAngleOrganizer():
         base = dataInfo[0][0]
     navID = dataInfo[0][1]
     
-    tiltOutputFileName = f"{base}_{navID}_sortedStack.rawtlt"
-    stackOutputFileName = f"{base}_{navID}_sortedStack.st"
-    imodInputFileName = f"{base}_{navID}_sortedData.txt"
+    dirName = "Tomo"
+    imodInputFileName = f"{base}_{navID}_Data.txt"
+    tiltOutputFileName = f"{base}_{navID}_Stack.rawtlt"
+    stackOutputFileName = f"{base}_{navID}_Stack.st"
+    
+    imodInputFilePath = os.path.join(inputPath,dirName,imodInputFileName)
+    tiltOutputFilePath = os.path.join(inputPath,dirName,tiltOutputFileName)
+    stackOutputFilePath = os.path.join(inputPath,dirName,stackOutputFileName)
+    
+    # Create Separate File Directory
+    os.mkdir(dirName)
+    os.chdir(dirName)
     
     # Write Raw Tilt File for IMOD/Etomo
-    tiltOutputFile = open(tiltOutputFileName,'w')
+    tiltOutputFile = open(tiltOutputFilePath,'w')
     tiltOutputFile.write("\n".join([str(a) for a in sortedAngles]))
     tiltOutputFile.close()
     
     # Write To Text File For IMOD
-    imodInputFile = open(imodInputFileName,'w')
+    imodInputFile = open(imodInputFilePath,'w')
     imodInputFile.write(str(dataLen))
     imodInputFile.write("\n")
     for index in range(dataLen):
@@ -79,11 +88,12 @@ def TiltAngleOrganizer():
     imodInputFile.close()
     
     # Control IMOD newstack Function
-    newstackCommand = " ".join(["newstack","-filei",imodInputFileName,
-                                "-ou",stackOutputFileName])
+    os.chdir(inputPath)
+    newstackCommand = " ".join(["newstack","-filei",imodInputFilePath,
+                                "-ou",stackOutputFilePath])
     sp.run(newstackCommand,shell=True)
     if etomoSelect == True:
-        imodCommand = " ".join(["imod",stackOutputFileName])
+        imodCommand = " ".join(["imod",stackOutputFilePath])
         sp.run(imodCommand,shell=True)
     
     
