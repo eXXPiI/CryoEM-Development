@@ -13,8 +13,8 @@
 
 ## Articles
 import tkinter as tk
-window = tk.TK()
-button  = tk.button(window,text="STOP",width=25,copmmand=window.destroy())
+window = tk.Tk()
+button  = tk.Button(window,text="STOP",width=25,command=window.destroy)
 button.pack()
 window.mainloop()
 
