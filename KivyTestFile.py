@@ -12,6 +12,18 @@
 """
 
 ## Articles
+import kivy
+from kivy.app import App
+from kivy.uix.button import Button
+
+kivy.require("2.0.0")
+
+class KivyApp(App):
+    def build(self):
+        buttonState =  Button(text="Push Here")
+        return buttonState
+
+KivyApp().run()
 
 
 # M02 End Program
