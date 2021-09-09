@@ -13,8 +13,16 @@
 
 ## Articles
 import tkinter as tk
+
+
+def hello():
+    print("hello")
+
+
+
 window = tk.Tk()
-button  = tk.Button(window,text="STOP",width=25,command=window.destroy)
+window.title("Tkinter Tester")
+button  = tk.Button(window,text="STOP",width=25,command=hello)
 button.pack()
 window.mainloop()
 
