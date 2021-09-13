@@ -19,15 +19,17 @@ def BinVolumeAutomator():
     import os
     import subprocess as sp
     
-    # Define Input Variables
+    """# Define Input Variables
     inputPath = str(sys.argv[1])
     if len(sys.argv) == 3:
         binSelect = int(sys.argv[2])
     else:
         binSelect = 2
+    """
+    inputPath = os.getcwd()
     
     # Regular Expression:
-    regEx = ['([a-zA-Z0-9-]*[_])?','([0-9]+)[_]','([a-zA-Z0-9]+)[_]','([0-9]+[\.][0-9]+[\.][0-9]+)']
+    regEx = ['([a-zA-Z0-9-])*[_]','([0-9]+)[_]','rec.mrc']
     patternFinder = re.compile(''.join(regEx))
     
     # Acquire Files From Directory
@@ -40,5 +42,21 @@ def BinVolumeAutomator():
     dataInfo = []
     for i in range(dataLen):
         dataInfo.append(patternFinder.findall(dataFiles[i])[0])
+    
+    # Define Output Variables
+    if dataInfo[0][0] == "":
+        base = "Data"
+    else:
+        base = dataInfo[0][0]
+    navID = dataInfo[0][1]
+    
+    dirName = "Tomo"
+    imodInputFileName = f"{base}_{navID}.txt"
+    tiltOutputFileName = f"{base}_{navID}.rawtlt"
+    stackOutputFileName = f"{base}_{navID}.st"
+    
+    imodInputFilePath = os.path.join(inputPath,dirName,imodInputFileName)
+    tiltOutputFilePath = os.path.join(inputPath,dirName,tiltOutputFileName)
+    stackOutputFilePath = os.path.join(inputPath,dirName,stackOutputFileName)
 
 # M02 End Program
