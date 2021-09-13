@@ -20,8 +20,18 @@ kivy.require("2.0.0")
 
 class KivyApp(App):
     def build(self):
-        buttonState =  Button(text="Push Here")
+        buttonState =  Button(text="Push Here",
+                              font_size="20sp",
+                              background_color=(1,1,1,1),
+                              color=(1,1,1,1),
+                              size=(32,32),
+                              size_hint=(0.2,0.2),
+                              pos=(300,300))
+        buttonState.bind(on_press=self.commandRun)
         return buttonState
+    
+    def commandRun(self,event):
+        print("Button Pressed")
 
 KivyApp().run()
 
