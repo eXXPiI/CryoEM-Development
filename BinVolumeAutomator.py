@@ -26,10 +26,11 @@ def BinVolumeAutomator():
     else:
         binSelect = 2
     """
-    inputPath = os.getcwd()
+    inputPath = "/home/jmyers/Documents/PEET_Projects/Janelia2018/TomoReplace/226"
     
     # Regular Expression:
-    regEx = ['([a-zA-Z0-9-])*[_]','([0-9]+)[_]','rec.mrc']
+    regEx = ['([a-zA-Z0-9-])*[_]','([0-9]+)[_]?','([a-z0-9-]*)',
+             '[.]([a-zA-Z]*)']
     patternFinder = re.compile(''.join(regEx))
     
     # Acquire Files From Directory
@@ -49,12 +50,21 @@ def BinVolumeAutomator():
     else:
         base = dataInfo[0][0]
     navID = dataInfo[0][1]
+    for i in range(dataLen):
+        
+    suffix = 
     
     dirName = "Processing"
-    tomoInputFileName = f"{base}_{navID}.txt"
+    tomoInputFileName = f"{base}_{navID}_{suffix}.txt"
     tomoOutputFileName = f"{base}_{navID}.st"
     
     tomoInputFilePath = os.path.join(inputPath,dirName,tomoInputFileName)
     tomoOutputFilePath = os.path.join(inputPath,dirName,tomoOutputFileName)
+    
+
+
+# If Code Independent, Run; If Code Imported, Do Not Run
+if __name__ == '__main__':
+    BinVolumeAutomator()
 
 # M02 End Program
