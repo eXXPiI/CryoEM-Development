@@ -50,13 +50,11 @@ def BinVolumeAutomator():
         base = dataInfo[0][0]
     navID = dataInfo[0][1]
     
-    dirName = "Tomo"
-    imodInputFileName = f"{base}_{navID}.txt"
-    tiltOutputFileName = f"{base}_{navID}.rawtlt"
-    stackOutputFileName = f"{base}_{navID}.st"
+    dirName = "Processing"
+    tomoInputFileName = f"{base}_{navID}.txt"
+    tomoOutputFileName = f"{base}_{navID}.st"
     
-    imodInputFilePath = os.path.join(inputPath,dirName,imodInputFileName)
-    tiltOutputFilePath = os.path.join(inputPath,dirName,tiltOutputFileName)
-    stackOutputFilePath = os.path.join(inputPath,dirName,stackOutputFileName)
+    tomoInputFilePath = os.path.join(inputPath,dirName,tomoInputFileName)
+    tomoOutputFilePath = os.path.join(inputPath,dirName,tomoOutputFileName)
 
 # M02 End Program
