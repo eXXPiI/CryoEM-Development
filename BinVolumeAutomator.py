@@ -5,10 +5,12 @@
 # Author: Jonathan Myers
 # Date Created: Mon Sep 13 16:24:01 2021
 # Date Modified: Sep 13 2021
-# Purpose: Run IMOD binvol command to bin tomograms to full 
+# Purpose: Run IMOD binvol command to isotropically bin tomogram
+reconstructions by an optional argument. Defaults to a bin of 2.
 # Imports: sys, re (regular expression), os (operating system), and subprocess.
-# Inputs/Arguments: 
-# Outputs/Returns: 
+# Inputs/Arguments: Non-optional .mrc image data directory path. Optional 
+binning dimension specification.
+# Outputs/Returns: Binned .mrc of original tomogram reconstruction.
 """
 
 ## Articles
@@ -19,17 +21,15 @@ def BinVolumeAutomator():
     import os
     import subprocess as sp
     
-    """# Define Input Variables
+    # Define Input Variables
     inputPath = str(sys.argv[1])
     if len(sys.argv) == 3:
         binSelect = int(sys.argv[2])
     else:
         binSelect = 2
-    """
-    inputPath = "/home/jmyers/Documents/PEET_Projects/Janelia2018/TomoReplace/226"
     
     # Regular Expression:
-    regEx = ['([a-zA-Z0-9-])*[_]','([0-9]+)[_]?','([a-z0-9-]*)',
+    regEx = ['([a-zA-Z0-9-]*)[_]','([0-9]+)[_]?','([a-z0-9-]*)',
              '[.]([a-zA-Z]*)']
     patternFinder = re.compile(''.join(regEx))
     
@@ -50,17 +50,23 @@ def BinVolumeAutomator():
     else:
         base = dataInfo[0][0]
     navID = dataInfo[0][1]
-    for i in range(dataLen):
         
-    suffix = 
+    inputSuffix = "rec"
+    outputSuffix = f"{inputSuffix}-b{binSelect}"
+    extension = "mrc"
     
-    dirName = "Processing"
-    tomoInputFileName = f"{base}_{navID}_{suffix}.txt"
-    tomoOutputFileName = f"{base}_{navID}.st"
+    tomoInputFileName = f"{base}_{navID}_{inputSuffix}.{extension}"
+    tomoOutputFileName = f"{base}_{navID}_{outputSuffix}.{extension}"
     
-    tomoInputFilePath = os.path.join(inputPath,dirName,tomoInputFileName)
-    tomoOutputFilePath = os.path.join(inputPath,dirName,tomoOutputFileName)
+    tomoInputFilePath = os.path.join(inputPath,tomoInputFileName)
+    tomoOutputFilePath = os.path.join(inputPath,tomoOutputFileName)
     
+    # Control IMOD binvol Function
+    os.chdir(inputPath)
+    newstackCommand = " ".join(["binvol","-b",str(binSelect),
+                                "-i",tomoInputFilePath,
+                                "-o",tomoOutputFilePath])
+    sp.run(newstackCommand,shell=True)
 
 
 # If Code Independent, Run; If Code Imported, Do Not Run
