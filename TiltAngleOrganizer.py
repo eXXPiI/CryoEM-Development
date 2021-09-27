@@ -45,11 +45,17 @@ def TiltAngleOrganizer():
     for i in range(dataLen):
         dataInfo.append(patternFinder.findall(dataFiles[i])[0])
     
+    # Determine Efficient Angle Sorting Routine
+    #if 
+    
     # Sort Files On Angle
     angles = [float(val[2]) for val in dataInfo]
     sortedAngleIndex = sorted(range(dataLen),key=lambda x:angles[x])
     sortedAngles = [dataInfo[index][2] for index in sortedAngleIndex]
     sortedFiles = [dataFiles[index] for index in sortedAngleIndex]
+    
+    # Extract Unique Angles
+    angleNum = len(uniqueAngles)
     
     # Define Output Variables
     if dataInfo[0][0] == "":
@@ -78,9 +84,9 @@ def TiltAngleOrganizer():
     
     # Write To Text File For IMOD
     imodInputFile = open(imodInputFilePath,'w')
-    imodInputFile.write(str(dataLen))
+    imodInputFile.write(str(angleNum))
     imodInputFile.write("\n")
-    for index in range(dataLen):
+    for index in range(angleNum):
         imodInputFile.write(sortedFiles[index])
         imodInputFile.write("\n")
         imodInputFile.write("/")
