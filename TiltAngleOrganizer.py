@@ -46,16 +46,19 @@ def TiltAngleOrganizer():
         dataInfo.append(patternFinder.findall(dataFiles[i])[0])
     
     # Determine Efficient Angle Sorting Routine
-    #if 
-    
-    # Sort Files On Angle
     angles = [float(val[2]) for val in dataInfo]
-    sortedAngleIndex = sorted(range(dataLen),key=lambda x:angles[x])
-    sortedAngles = [dataInfo[index][2] for index in sortedAngleIndex]
-    sortedFiles = [dataFiles[index] for index in sortedAngleIndex]
-    
-    # Extract Unique Angles
+    anglesLen = len(angles)
+    uniqueAngles = set(angles)
     angleNum = len(uniqueAngles)
+    
+    if anglesLen == angleNum:
+        # Sort Files by Angle Without Latest Image Recording
+        sortedAngleIndex = sorted(range(dataLen),key=lambda x:angles[x])
+        sortedAngles = [dataInfo[index][2] for index in sortedAngleIndex]
+        sortedFiles = [dataFiles[index] for index in sortedAngleIndex]
+    else:
+        # Sort Files by Angle Using Latest Image Recording
+        print("hello")
     
     # Define Output Variables
     if dataInfo[0][0] == "":
