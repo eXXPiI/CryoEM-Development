@@ -22,20 +22,30 @@ def TiltAngleOrganizer():
     import os
     import subprocess as sp
     
+    # Testing/Debugging Lines
+    inputPath = "/home/jmyers/Documents/testFolder/Unique"
+    etomoSelect = False
+    
     # Define Input Variables
+    """
     inputPath = str(sys.argv[1])
     if len(sys.argv) == 3:
         etomoSelect = bool(int(sys.argv[2]))
     else:
         etomoSelect = False
+    """
     
     # Regular Expression:
     regEx = ['([a-zA-Z0-9-]*[_])?','([0-9]+)[_]','([-]?[0-9]+[\.][0-9]+)[_]',
              '([a-zA-Z0-9]+)[_]','([0-9]+[\.][0-9]+[\.][0-9]+)']
     patternFinder = re.compile(''.join(regEx))
+    baseLocation = 0
+    navIDLocation = 1
+    angleLocation = 2
+    dateLocation = 3
+    timeLocation = 4
     
     # Acquire Files From Directory
-    #dataDirectory = os.getcwd()
     dataDirectory = os.chdir(inputPath)
     dataFiles = os.listdir(dataDirectory)
     dataLen = len(dataFiles)
@@ -46,7 +56,7 @@ def TiltAngleOrganizer():
         dataInfo.append(patternFinder.findall(dataFiles[i])[0])
     
     # Determine Efficient Angle Sorting Routine
-    angles = [float(val[2]) for val in dataInfo]
+    angles = [float(val[angleLocation]) for val in dataInfo]
     anglesLen = len(angles)
     uniqueAngles = set(angles)
     angleNum = len(uniqueAngles)
@@ -54,18 +64,19 @@ def TiltAngleOrganizer():
     if anglesLen == angleNum:
         # Sort Files by Angle Without Latest Image Recording
         sortedAngleIndex = sorted(range(dataLen),key=lambda x:angles[x])
-        sortedAngles = [dataInfo[index][2] for index in sortedAngleIndex]
+        sortedAngles = [dataInfo[index][angleLocation] for index in sortedAngleIndex]
         sortedFiles = [dataFiles[index] for index in sortedAngleIndex]
     else:
         # Sort Files by Angle Using Latest Image Recording
         print("hello")
     
     # Define Output Variables
-    if dataInfo[0][0] == "":
+    # Selects Information from First File
+    if dataInfo[0][baseLocation] == "":
         base = "Data"
     else:
-        base = dataInfo[0][0]
-    navID = dataInfo[0][1]
+        base = dataInfo[0][baseLocation]
+    navID = dataInfo[0][navIDLocation]
     
     dirName = "Tomo"
     imodInputFileName = f"{base}_{navID}.txt"
