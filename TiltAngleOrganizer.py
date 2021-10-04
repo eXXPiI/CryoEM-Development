@@ -50,7 +50,7 @@ def TiltAngleOrganizer():
     dataFiles = os.listdir(dataDirectory)
     dataLen = len(dataFiles)
     
-    # Mine Filename Metadata
+    # Parse Filename Metadata
     dataInfo = []
     for i in range(dataLen):
         dataInfo.append(patternFinder.findall(dataFiles[i])[0])
