@@ -24,7 +24,7 @@ def TiltAngleOrganizer():
     import subprocess as sp
     
     # Testing/Debugging Lines
-    inputPath = "/home/jmyers/Documents/testFolder/Unique"
+    inputPath = "/home/jmyers/Documents/testFolder/NonUnique"
     etomoSelect = False
     
     # Define Input Variables
@@ -36,15 +36,15 @@ def TiltAngleOrganizer():
         etomoSelect = False
     """
     
-    # Regular Expression:
+    # Regular Expression and Parsing Format:
     regEx = ['([a-zA-Z0-9-]*[_])?','([0-9]+)[_]','([-]?[0-9]+[\.][0-9]+)[_]',
-             '([a-zA-Z0-9]+)[_]','([0-9]+[\.][0-9]+[\.][0-9]+)']
+             '([a-zA-Z0-9]+[_][0-9]+[\.][0-9]+[\.][0-9]+)']
     patternFinder = re.compile(''.join(regEx))
     baseLocation = 0
     navIDLocation = 1
     angleLocation = 2
-    dateLocation = 3
-    timeLocation = 4
+    timeLocation = 3
+    parseFormat = "%b%d_%H.%M.%S"
     
     # Acquire Files From Directory
     dataDirectory = os.chdir(inputPath)
@@ -58,21 +58,22 @@ def TiltAngleOrganizer():
     
     # Determine Efficient Angle Sorting Routine
     angles = [float(val[angleLocation]) for val in dataInfo]
-    anglesLen = len(angles)
     uniqueAngles = set(angles)
     angleNum = len(uniqueAngles)
     
     # Run Efficient Sorting Routine
-    if anglesLen == angleNum:
+    if dataLen == angleNum:
         # Sort Files by Angle Without Latest Image Recording
         sortedAngleIndex = sorted(range(dataLen),key=lambda x:angles[x])
         sortedAngles = [dataInfo[index][angleLocation] for index in sortedAngleIndex]
         sortedFiles = [dataFiles[index] for index in sortedAngleIndex]
     else:
         # Sort Files by Angle Using Latest Image Recording
-        print("hello")
-        
-        
+        for uniqueAngle in uniqueAngles:
+            angleIndices = [i for i, element in angles if element == 1]
+            angleIndices = [index for angle in angles if angle == uniqueAngle]
+            #angleIndices = angles.index(angle)
+            #date = dt.datetime.strptime(dataInfo[0][timeLocation],parseFormat)
     
     # Define Output Variables
     # Selects Information from First File
