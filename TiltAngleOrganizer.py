@@ -20,6 +20,7 @@ def TiltAngleOrganizer():
     import sys
     import re
     import os
+    import datetime as dt
     import subprocess as sp
     
     # Testing/Debugging Lines
@@ -61,6 +62,7 @@ def TiltAngleOrganizer():
     uniqueAngles = set(angles)
     angleNum = len(uniqueAngles)
     
+    # Run Efficient Sorting Routine
     if anglesLen == angleNum:
         # Sort Files by Angle Without Latest Image Recording
         sortedAngleIndex = sorted(range(dataLen),key=lambda x:angles[x])
@@ -69,6 +71,7 @@ def TiltAngleOrganizer():
     else:
         # Sort Files by Angle Using Latest Image Recording
         print("hello")
+        
         
     
     # Define Output Variables
