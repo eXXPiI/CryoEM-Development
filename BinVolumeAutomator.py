@@ -52,7 +52,7 @@ def BinVolumeAutomator():
     navID = dataInfo[0][1]
         
     inputSuffix = "rec"
-    outputSuffix = f"{inputSuffix}-b{binSelect}"
+    outputSuffix = f"{inputSuffix}-bin{binSelect}"
     extension = "mrc"
     
     tomoInputFileName = f"{base}_{navID}_{inputSuffix}.{extension}"
