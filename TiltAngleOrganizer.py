@@ -24,17 +24,17 @@ def TiltAngleOrganizer():
     import subprocess as sp
     
     # Testing/Debugging Lines
-    inputPath = "/home/jmyers/Documents/testFolder/NonUnique"
+    """
+    inputPath = "/home/jmyers/Documents/testFolder/Unique"
     etomoSelect = False
+    """
     
     # Define Input Variables
-    """
     inputPath = str(sys.argv[1])
     if len(sys.argv) == 3:
         etomoSelect = bool(int(sys.argv[2]))
     else:
         etomoSelect = False
-    """
     
     # Regular Expression and Parsing Format:
     regEx = ['([a-zA-Z0-9-]*[_])?','([0-9]+)[_]','([-]?[0-9]+[\.][0-9]+)[_]',
@@ -55,25 +55,33 @@ def TiltAngleOrganizer():
     dataInfo = []
     for i in range(dataLen):
         dataInfo.append(patternFinder.findall(dataFiles[i])[0])
+
+    # Extract All Image Dates
+    allDates = []
+    for i in range(dataLen):
+        allDates.append(dt.datetime.strptime(dataInfo[i][timeLocation],parseFormat))
     
     # Determine Efficient Angle Sorting Routine
-    angles = [float(val[angleLocation]) for val in dataInfo]
-    uniqueAngles = set(angles)
+    allAngles = [float(val[angleLocation]) for val in dataInfo]
+    uniqueAngles = sorted(set(allAngles))
     angleNum = len(uniqueAngles)
     
     # Run Efficient Sorting Routine
     if dataLen == angleNum:
         # Sort Files by Angle Without Latest Image Recording
-        sortedAngleIndex = sorted(range(dataLen),key=lambda x:angles[x])
-        sortedAngles = [dataInfo[index][angleLocation] for index in sortedAngleIndex]
-        sortedFiles = [dataFiles[index] for index in sortedAngleIndex]
+        sortedAngleIndex = sorted(range(dataLen),key=lambda x:allAngles[x])
     else:
         # Sort Files by Angle Using Latest Image Recording
+        sortedAngleIndex = []
         for uniqueAngle in uniqueAngles:
-            angleIndices = [i for i, element in angles if element == 1]
-            angleIndices = [index for angle in angles if angle == uniqueAngle]
-            #angleIndices = angles.index(angle)
-            #date = dt.datetime.strptime(dataInfo[0][timeLocation],parseFormat)
+            angleIndices = [index for index,angle in enumerate(allAngles) if angle == uniqueAngle]
+            angleDates = [allDates[index] for index in angleIndices]
+            #angleDates = []
+            #for index in angleIndices:
+                #angleDates.append(allDates[index])
+            sortedAngleIndex.append(allDates.index(max(angleDates)))
+
+    sortedFiles = [dataFiles[index] for index in sortedAngleIndex]
     
     # Define Output Variables
     # Selects Information from First File
@@ -98,7 +106,7 @@ def TiltAngleOrganizer():
     
     # Write Raw Tilt File for IMOD/Etomo
     tiltOutputFile = open(tiltOutputFilePath,'w')
-    tiltOutputFile.write("\n".join([str(a) for a in sortedAngles]))
+    tiltOutputFile.write("\n".join([str(a) for a in uniqueAngles]))
     tiltOutputFile.close()
     
     # Write To Text File For IMOD
