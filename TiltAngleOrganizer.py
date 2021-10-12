@@ -97,8 +97,8 @@ def TiltAngleOrganizer():
     
     dirName = "Tomo"
     imodInputFileName = f"{base}_{navID}.txt"
-    tiltOutputFileName = f"{base}_{navID}.rawtlt"
-    stackOutputFileName = f"{base}_{navID}.st"
+    tiltOutputFileName = f"tilt{navID}.rawtlt"
+    stackOutputFileName = f"tilt{navID}.st"
     
     imodInputFilePath = os.path.join(inputPath,dirName,imodInputFileName)
     tiltOutputFilePath = os.path.join(inputPath,dirName,tiltOutputFileName)
