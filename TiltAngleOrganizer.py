@@ -37,13 +37,17 @@ def TiltAngleOrganizer():
         etomoSelect = False
     
     # Regular Expression and Parsing Format:
-    regEx = ['([a-zA-Z0-9-]*[_])?','([0-9]+)[_]','([-]?[0-9]+[\.][0-9]+)[_]',
+    # Normal Format: Base(Optional)_NavID_Angle_Date_Time.Extension (0123)
+    #regEx = ['([a-zA-Z0-9-]*[_])?','([0-9]+)[_]','([-]?[0-9]+[\.][0-9]+)[_]',
              '([a-zA-Z0-9]+[_][0-9]+[\.][0-9]+[\.][0-9]+)']
+    # PNCC Format: Base_GridNum_NavID_ImageNum_Angle_Date_Time.Extension (0245)
+    regEx = ['([a-zA-Z0-9-]*[_])?','([0-9])[_]','([0-9]+)[_]','([0-9]+)[_]',
+             '([-]?[0-9]+[\.][0-9]+)[_]','([a-zA-Z0-9]+[_][0-9]+[\.][0-9]+[\.][0-9]+)']
     patternFinder = re.compile(''.join(regEx))
     baseLocation = 0
-    navIDLocation = 1
-    angleLocation = 2
-    timeLocation = 3
+    navIDLocation = 2
+    angleLocation = 4
+    timeLocation = 5
     parseFormat = "%b%d_%H.%M.%S"
     
     # Acquire Files From Directory
