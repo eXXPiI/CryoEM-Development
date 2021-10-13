@@ -39,7 +39,7 @@ def TiltAngleOrganizer():
     # Regular Expression and Parsing Format:
     # Normal Format: Base(Optional)_NavID_Angle_Date_Time.Extension (0123)
     #regEx = ['([a-zA-Z0-9-]*[_])?','([0-9]+)[_]','([-]?[0-9]+[\.][0-9]+)[_]',
-             '([a-zA-Z0-9]+[_][0-9]+[\.][0-9]+[\.][0-9]+)']
+             #'([a-zA-Z0-9]+[_][0-9]+[\.][0-9]+[\.][0-9]+)']
     # PNCC Format: Base_GridNum_NavID_ImageNum_Angle_Date_Time.Extension (0245)
     regEx = ['([a-zA-Z0-9-]*[_])?','([0-9])[_]','([0-9]+)[_]','([0-9]+)[_]',
              '([-]?[0-9]+[\.][0-9]+)[_]','([a-zA-Z0-9]+[_][0-9]+[\.][0-9]+[\.][0-9]+)']
