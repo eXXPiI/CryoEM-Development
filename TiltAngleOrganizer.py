@@ -4,7 +4,7 @@
 # Version: 0.1.0
 # Author: Jonathan Myers
 # Date Created: Mon Aug 23 16:53:57 2021
-# Date Modified: Oct 13 2021
+# Date Modified: Oct 14 2021
 # Purpose: Builds angle sorted image stack of form .st from .mrc images of 
 tomography samples for IMOD tomogram reconstruction.
 # Imports: sys, re (regular expression), os (operating system), and subprocess.
@@ -25,7 +25,7 @@ def TiltAngleOrganizer():
     
     # Testing/Debugging Lines
     """
-    inputPath = "/home/jmyers/Documents/testFolder/Unique"
+    inputPath = "/home/jmyers/Documents/testFolder/43"
     etomoSelect = False
     """
     
@@ -37,12 +37,10 @@ def TiltAngleOrganizer():
         etomoSelect = False
     
     # Regular Expression and Parsing Format:
-    # Normal Format: Base(Optional)_NavID_Angle_Date_Time.Extension (0123)
-    #regEx = ['([a-zA-Z0-9-]*[_])?','([0-9]+)[_]','([-]?[0-9]+[\.][0-9]+)[_]',
-             #'([a-zA-Z0-9]+[_][0-9]+[\.][0-9]+[\.][0-9]+)']
-    # PNCC Format: Base_GridNum_NavID_ImageNum_Angle_Date_Time.Extension (0245)
-    regEx = ['([a-zA-Z0-9-]*[_])?','([0-9])[_]','([0-9]+)[_]','([0-9]+)[_]',
-             '([-]?[0-9]+[\.][0-9]+)[_]','([a-zA-Z0-9]+[_][0-9]+[\.][0-9]+[\.][0-9]+)']
+    # PNCC/SerialEM Format: Base_GridNum_NavID_ImageNum_Angle_<Date_Time>.Extension (0245)
+    regEx = ['(?:([a-zA-Z0-9-]*)[_])?','(?:([0-9])[_])?','([0-9]+)[_]',
+             '(?:([0-9]{5})[_])?','([-]?[0-9]+[\.][0-9]+)[_]',
+             '([a-zA-Z0-9]+[_][0-9]+[\.][0-9]+[\.][0-9]+)']
     patternFinder = re.compile(''.join(regEx))
     baseLocation = 0
     navIDLocation = 2
@@ -80,9 +78,6 @@ def TiltAngleOrganizer():
         for uniqueAngle in uniqueAngles:
             angleIndices = [index for index,angle in enumerate(allAngles) if angle == uniqueAngle]
             angleDates = [allDates[index] for index in angleIndices]
-            #angleDates = []
-            #for index in angleIndices:
-                #angleDates.append(allDates[index])
             sortedAngleIndex.append(allDates.index(max(angleDates)))
 
     sortedFiles = [dataFiles[index] for index in sortedAngleIndex]
