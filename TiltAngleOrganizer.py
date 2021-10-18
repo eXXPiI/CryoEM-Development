@@ -25,7 +25,7 @@ def TiltAngleOrganizer():
     
     # Testing/Debugging Lines
     """
-    inputPath = "/home/jmyers/Documents/testFolder/43"
+    inputPath = "/home/jmyers/Documents/testFolder/PNCC_Format"
     etomoSelect = False
     """
     
@@ -35,6 +35,8 @@ def TiltAngleOrganizer():
         etomoSelect = bool(int(sys.argv[2]))
     else:
         etomoSelect = False
+    
+    newDirName = "Tomo"
     
     # Regular Expression and Parsing Format:
     # PNCC/SerialEM Format: Base_GridNum_NavID_ImageNum_Angle_<Date_Time>.Extension (0245)
@@ -47,11 +49,16 @@ def TiltAngleOrganizer():
     angleLocation = 4
     timeLocation = 5
     parseFormat = "%b%d_%H.%M.%S"
-    
-    # Acquire Files From Directory
+
+    # Acquire Files From Directory And Create Output Directory If Not Existent
     dataDirectory = os.chdir(inputPath)
     dataFiles = os.listdir(dataDirectory)
+    if dataFiles.count(newDirName) > 0:
+        dataFiles.remove(newDirName)
+    else:
+        os.mkdir(newDirName)
     dataLen = len(dataFiles)
+    #os.chdir(newDirName)
     
     # Parse Filename Metadata
     dataInfo = []
@@ -90,18 +97,13 @@ def TiltAngleOrganizer():
         base = dataInfo[0][baseLocation]
     navID = dataInfo[0][navIDLocation]
     
-    dirName = "Tomo"
     imodInputFileName = f"{base}_{navID}.txt"
     tiltOutputFileName = f"tilt{navID}.rawtlt"
     stackOutputFileName = f"tilt{navID}.st"
     
-    imodInputFilePath = os.path.join(inputPath,dirName,imodInputFileName)
-    tiltOutputFilePath = os.path.join(inputPath,dirName,tiltOutputFileName)
-    stackOutputFilePath = os.path.join(inputPath,dirName,stackOutputFileName)
-    
-    # Create Separate File Directory
-    os.mkdir(dirName)
-    os.chdir(dirName)
+    imodInputFilePath = os.path.join(inputPath,newDirName,imodInputFileName)
+    tiltOutputFilePath = os.path.join(inputPath,newDirName,tiltOutputFileName)
+    stackOutputFilePath = os.path.join(inputPath,newDirName,stackOutputFileName)
     
     # Write Raw Tilt File for IMOD/Etomo
     tiltOutputFile = open(tiltOutputFilePath,'w')
@@ -127,7 +129,7 @@ def TiltAngleOrganizer():
     if etomoSelect == True:
         imodCommand = " ".join(["imod",stackOutputFilePath])
         sp.run(imodCommand,shell=True)
-    
+        
     
 # If Code Independent, Run; If Code Imported, Do Not Run
 if __name__ == '__main__':
