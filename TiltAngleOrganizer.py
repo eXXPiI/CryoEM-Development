@@ -8,7 +8,7 @@
 # Purpose: Builds angle sorted image stack of form .st from .mrc images of 
 tomography samples for IMOD tomogram reconstruction.
 # Imports: sys, re (regular expression), os (operating system), and subprocess.
-# Inputs/Arguments: Non-optional .mrc image data directory path. Optional 
+# Inputs/Arguments: Non-optional global .mrc image data directory path. Optional 
 IMOD/Etomo start boolean for completed stack.
 # Outputs/Returns: Angle sorted stack (.st) in optional directory path or
 image data directory. Sorted angle .rawtlt file and sorted data intermediate file.
