@@ -24,8 +24,8 @@ def TiltAngleOrganizer():
     import subprocess as sp
     
     # Testing/Debugging Lines
-    
-    inputPath = "/home/jmyers/Documents/testFolder/Unique"
+    """
+    inputPath = "/home/jmyers/Documents/testFolder/PNCC_Format"
     etomoSelect = False
     """
     
@@ -35,9 +35,6 @@ def TiltAngleOrganizer():
         etomoSelect = bool(int(sys.argv[2]))
     else:
         etomoSelect = False
-    """
-    
-    newDirName = "Tomo"
     
     # Regular Expression and Parsing Format:
     # PNCC/SerialEM Format: Base_GridNum_NavID_ImageNum_Angle_<Date_Time>.Extension (0245)
@@ -52,6 +49,7 @@ def TiltAngleOrganizer():
     parseFormat = "%b%d_%H.%M.%S"
 
     # Acquire Files From Directory And Create Output Directory If Not Existent
+    newDirName = "Tomo"
     dataDirectory = os.chdir(inputPath)
     dataFiles = os.listdir(dataDirectory)
     if dataFiles.count(newDirName) > 0:
@@ -59,7 +57,6 @@ def TiltAngleOrganizer():
     else:
         os.mkdir(newDirName)
     dataLen = len(dataFiles)
-    #os.chdir(newDirName)
     
     # Parse Filename Metadata
     dataInfo = []
@@ -87,7 +84,6 @@ def TiltAngleOrganizer():
             angleIndices = [index for index,angle in enumerate(allAngles) if angle == uniqueAngle]
             angleDates = [allDates[index] for index in angleIndices]
             sortedAngleIndex.append(allDates.index(max(angleDates)))
-
     sortedFiles = [dataFiles[index] for index in sortedAngleIndex]
     
     # Define Output Variables
@@ -123,7 +119,6 @@ def TiltAngleOrganizer():
     imodInputFile.close()
     
     # Control IMOD newstack Function
-    os.chdir(inputPath)
     newstackCommand = " ".join(["newstack","-filei",imodInputFilePath,
                                 "-ou",stackOutputFilePath])
     sp.run(newstackCommand,shell=True)
