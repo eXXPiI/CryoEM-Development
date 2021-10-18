@@ -24,8 +24,8 @@ def TiltAngleOrganizer():
     import subprocess as sp
     
     # Testing/Debugging Lines
-    """
-    inputPath = "/home/jmyers/Documents/testFolder/PNCC_Format"
+    
+    inputPath = "/home/jmyers/Documents/testFolder/Unique"
     etomoSelect = False
     """
     
@@ -35,6 +35,7 @@ def TiltAngleOrganizer():
         etomoSelect = bool(int(sys.argv[2]))
     else:
         etomoSelect = False
+    """
     
     newDirName = "Tomo"
     
