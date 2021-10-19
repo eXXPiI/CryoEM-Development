@@ -45,18 +45,14 @@ def BinVolumeAutomator():
         dataInfo.append(patternFinder.findall(dataFiles[i])[0])
     
     # Define Output Variables
-    if dataInfo[0][0] == "":
-        base = "Data"
-    else:
-        base = dataInfo[0][0]
     navID = dataInfo[0][1]
-        
     inputSuffix = "rec"
     outputSuffix = f"{inputSuffix}-bin{binSelect}"
-    extension = "mrc"
+    inputExtension = "mrc"
+    outputExtension = "mrc"
     
-    tomoInputFileName = f"{base}_{navID}_{inputSuffix}.{extension}"
-    tomoOutputFileName = f"{base}_{navID}_{outputSuffix}.{extension}"
+    tomoInputFileName = f"tilt{navID}_{inputSuffix}.{inputExtension}"
+    tomoOutputFileName = f"tilt{navID}_{outputSuffix}.{outputExtension}"
     
     tomoInputFilePath = os.path.join(inputPath,tomoInputFileName)
     tomoOutputFilePath = os.path.join(inputPath,tomoOutputFileName)
