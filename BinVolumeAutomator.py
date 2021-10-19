@@ -4,7 +4,7 @@
 # Version: 0.0.1
 # Author: Jonathan Myers
 # Date Created: Mon Sep 13 16:24:01 2021
-# Date Modified: Sep 21 2021
+# Date Modified: Oct 19 2021
 # Purpose: Run IMOD binvol command to isotropically bin tomogram
 reconstructions by an optional argument. Defaults to a bin of 2.
 # Imports: sys, re (regular expression), os (operating system), and subprocess.
@@ -21,6 +21,12 @@ def BinVolumeAutomator():
     import os
     import subprocess as sp
     
+    # Testing/Debugging Lines
+    """
+    inputPath = "/home/jmyers/Documents/testFolder/PNCC_Format/Tomo"
+    binSelect = 2
+    """
+    
     # Define Input Variables
     inputPath = str(sys.argv[1])
     if len(sys.argv) == 3:
@@ -28,24 +34,29 @@ def BinVolumeAutomator():
     else:
         binSelect = 2
     
-    # Regular Expression:
-    regEx = ['([a-zA-Z0-9-]*)[_]','([0-9]+)[_]?','([a-z0-9-]*)',
+    # Regular Expression And Parsing Format:
+    # emClarity Format: tilt<NavID>_Suffix.Extension
+    emClarityRegEx = ['tilt','([0-9]+)[_]?','([a-z0-9-]*)',
              '[.]([a-zA-Z]*)']
-    patternFinder = re.compile(''.join(regEx))
+    emClarityPatternFinder = re.compile(''.join(emClarityRegEx))
+    # Base Format: Base_NavID.txt (If Ever Useful)
+    #txtRegEx = ['([a-zA-Z0-9-]*)[_]','([0-9]+)[_]?','.txt']
+    #txtPatternFinder = re.compile(''.join(txtRegEx))
     
-    # Acquire Files From Directory
-    #dataDirectory = os.getcwd()
+    # Acquire Files From Directory and Parse Filename Metadata
     dataDirectory = os.chdir(inputPath)
     dataFiles = os.listdir(dataDirectory)
-    dataLen = len(dataFiles)
-    
-    # Mine Filename Metadata
     dataInfo = []
-    for i in range(dataLen):
-        dataInfo.append(patternFinder.findall(dataFiles[i])[0])
+    for info in dataFiles:
+        try:
+            dataInfo.append(emClarityPatternFinder.findall(info)[0])
+        except IndexError:
+            # No Computation Time Dedicated To Non-Scheme Files
+            pass
     
     # Define Output Variables
-    navID = dataInfo[0][1]
+    # Selects Information From First File
+    navID = dataInfo[0][0]
     inputSuffix = "rec"
     outputSuffix = f"{inputSuffix}-bin{binSelect}"
     inputExtension = "mrc"
