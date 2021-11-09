@@ -1,1 +1,29 @@
- 
+Bootstrap: docker
+From: ubuntu:21.04
+
+%setup
+
+
+%files
+
+
+%environment
+
+
+%post
+
+
+%runscript
+
+
+%startscript
+
+
+%test
+
+
+%labels
+
+
+%help
+This container is designed to test out Singularity containterization. If this test is successful, software will be packaged into it for use on the UW-Madison and MIR HTC systems.
