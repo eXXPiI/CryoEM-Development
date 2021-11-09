@@ -14,7 +14,7 @@ IMOD/Etomo start boolean for completed stack.
 image data directory. Sorted angle .rawtlt file and sorted data intermediate file.
 """
 
-# Articles
+## Articles
 
 def TiltAngleOrganizer():
     import sys
