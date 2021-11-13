@@ -11,7 +11,7 @@ From: ubuntu:21.04
 
 
 %post
-
+apt update && apt upgrade
 
 %runscript
 
@@ -20,10 +20,10 @@ From: ubuntu:21.04
 
 
 %test
-
+echo "Container is Running Ubuntu"
 
 %labels
-
+AUTHOR_NAME JonathanMyers
 
 %help
 This container is designed to test out Singularity containterization. If this test is successful, software will be packaged into it for use on the UW-Madison and MIR HTC systems.
