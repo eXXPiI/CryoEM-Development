@@ -20,8 +20,8 @@ def RotateAutomator():
     import subprocess as sp
     
     # Testing/Debugging Lines
-    """
-    inputPath = "/home/jmyers/Documents/testFolder"
+    #"""
+    inputPath = "/home/jmyers/Documents/testFolder/Rotate"
     angleSelect = 90
     """
     
@@ -31,6 +31,7 @@ def RotateAutomator():
         angleSelect = int(sys.argv[2])
     else:
         angleSelect = 90
+    """
     
     # Regular Expression And Parsing Format:
     # emClarity Format: tilt<NavID>.st
@@ -40,13 +41,34 @@ def RotateAutomator():
     #txtRegEx = ['([a-zA-Z0-9-]*)[_]','([0-9]+)[_]?','.txt']
     #txtPatternFinder = re.compile(''.join(txtRegEx))
     
-    # Acquire Subdirectories From Directory and Parse
+    # Acquire Subdirectories From Directory
     dataDirectory = os.chdir(inputPath)
     dataPartitions = os.listdir(dataDirectory)
-    dataInfo = []
-    #for 
+    dataFiles = []
+    for partition in dataPartitions:
+        internalPath = f"{partition}/Tomo"
+        dataFiles.append(os.listdir(internalPath))
     
+    # Parse Files in Subdirectories For Stacks
+    imageStacks = []
+    for fileList in dataFiles:
+        for file in fileList:
+            try:
+                imageStacks.append(emClarityPatternFinder.findall(file)[0])
+            except IndexError:
+                # No Computation Time Dedicated To Non-Scheme Files
+                pass
     
+    # Define Output Variables
+    nameScheme =  lambda navID: f"tilt{navID}.st"
+    oldImageStacks = []
+    newImageStacks = []
+    for partition in dataPartitions:
+        
+    
+    # Control IMOD newstack -rotate Function
+    
+    print("done")
 
 # If Code Independent, Run; If Code Imported, Do Not Run
 if __name__ == '__main__':

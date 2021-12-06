@@ -70,10 +70,10 @@ def BinVolumeAutomator():
     
     # Control IMOD binvol Function
     os.chdir(inputPath)
-    newstackCommand = " ".join(["binvol","-b",str(binSelect),
+    binvolCommand = " ".join(["binvol","-b",str(binSelect),
                                 "-i",tomoInputFilePath,
                                 "-o",tomoOutputFilePath])
-    sp.run(newstackCommand,shell=True)
+    sp.run(binvolCommand,shell=True)
 
 
 # If Code Independent, Run; If Code Imported, Do Not Run
