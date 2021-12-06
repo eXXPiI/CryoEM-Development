@@ -15,12 +15,11 @@
 
 def RotateAutomator():
     import sys
-    import re
     import os
     import subprocess as sp
     
     # Testing/Debugging Lines
-    #"""
+    """
     inputPath = "/home/jmyers/Documents/testFolder/Rotate"
     angleSelect = 90
     """
@@ -31,44 +30,23 @@ def RotateAutomator():
         angleSelect = int(sys.argv[2])
     else:
         angleSelect = 90
-    """
-    
-    # Regular Expression And Parsing Format:
-    # emClarity Format: tilt<NavID>.st
-    emClarityRegEx = ['tilt','([0-9]+)','.st']
-    emClarityPatternFinder = re.compile(''.join(emClarityRegEx))
-    # Base Format: Base_NavID.txt (If Ever Useful)
-    #txtRegEx = ['([a-zA-Z0-9-]*)[_]','([0-9]+)[_]?','.txt']
-    #txtPatternFinder = re.compile(''.join(txtRegEx))
     
     # Acquire Subdirectories From Directory
     dataDirectory = os.chdir(inputPath)
     dataPartitions = os.listdir(dataDirectory)
-    dataFiles = []
-    for partition in dataPartitions:
-        internalPath = f"{partition}/Tomo"
-        dataFiles.append(os.listdir(internalPath))
-    
-    # Parse Files in Subdirectories For Stacks
-    imageStacks = []
-    for fileList in dataFiles:
-        for file in fileList:
-            try:
-                imageStacks.append(emClarityPatternFinder.findall(file)[0])
-            except IndexError:
-                # No Computation Time Dedicated To Non-Scheme Files
-                pass
     
     # Define Output Variables
-    nameScheme =  lambda navID: f"tilt{navID}.st"
-    oldImageStacks = []
-    newImageStacks = []
+    nameScheme =  lambda navID: f"{navID}/Tomo/tilt{navID}.st"
+    imageStacks = []
     for partition in dataPartitions:
-        
+        imageStacks.append(nameScheme(partition))
     
     # Control IMOD newstack -rotate Function
-    
-    print("done")
+    for imagePath in imageStacks:
+        rotateCommand = " ".join(["newstack","-rotate",str(angleSelect),
+                                "-in",imagePath,"-ou",imagePath])
+        sp.run(rotateCommand,shell=True)
+
 
 # If Code Independent, Run; If Code Imported, Do Not Run
 if __name__ == '__main__':
