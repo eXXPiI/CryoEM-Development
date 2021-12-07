@@ -8,8 +8,8 @@
 # Purpose: Run IMOD newstack -rotate command to rotate image stacks by a
 degree value consistent with cross product. Defaults to 90 degree rotation.
 # Imports: sys, os (operating system), and subprocess.
-# Inputs/Arguments: Image stack dataset directory path and optional rotation 
-angle. If no angle is supplied, 90 degrees is chosen.
+# Inputs/Arguments: Image stack .st dataset directory path and optional
+rotation angle. If no angle is supplied, 90 degrees is chosen.
 # Outputs/Returns: Rotated image stack located within original location.
 Original image file renamed to <original>~ in same directory.
 """
