@@ -46,6 +46,8 @@ def RotateAutomator():
         rotateCommand = " ".join(["newstack","-rotate",str(angleSelect),
                                 "-in",imagePath,"-ou",imagePath])
         sp.run(rotateCommand,shell=True)
+        # Clean Autosave Files
+        sp.run("rm *~",shell=True)
 
 
 # If Code Independent, Run; If Code Imported, Do Not Run
