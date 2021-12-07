@@ -4,11 +4,14 @@
 # Version: 0.0.1
 # Author: Jonathan Myers
 # Date Created: Thu Nov 4 00:21:50 2021
-# Date Modified: Nov 4 2021
-# Purpose: None.
-# Imports: None.
-# Inputs/Arguments: None.
-# Outputs/Returns: None.
+# Date Modified: Dec 7 2021
+# Purpose: Run IMOD newstack -rotate command to rotate image stacks by a
+degree value consistent with cross product. Defaults to 90 degree rotation.
+# Imports: sys, os (operating system), and subprocess.
+# Inputs/Arguments: Image stack dataset directory path and optional rotation 
+angle. If no angle is supplied, 90 degrees is chosen.
+# Outputs/Returns: Rotated image stack located within original location.
+Original image file renamed to <original>~ in same directory.
 """
 
 ## Articles
@@ -46,8 +49,6 @@ def RotateAutomator():
         rotateCommand = " ".join(["newstack","-rotate",str(angleSelect),
                                 "-in",imagePath,"-ou",imagePath])
         sp.run(rotateCommand,shell=True)
-        # Clean Autosave Files
-        sp.run("rm *~",shell=True)
 
 
 # If Code Independent, Run; If Code Imported, Do Not Run
