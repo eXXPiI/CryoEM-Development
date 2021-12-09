@@ -10,9 +10,9 @@ tomography samples for IMOD tomogram reconstruction.
 # Imports: sys, re (regular expression), os (operating system), and subprocess.
 # Inputs/Arguments: Non-optional global .mrc image data directory path. 
 Optional IMOD/Etomo start boolean for completed stack.
-# Outputs/Returns: Angle sorted stack (.st) in optional directory path or
-image data directory. Sorted angle .rawtlt file and sorted data intermediate 
-file.
+# Outputs/Returns: Angle sorted stack (.st) in Tomo sub-directory located in
+image data directory. Sorted angle .rawtlt file, dose sorted angles in .order 
+file, and sorted data intermediate file.
 """
 
 ## Articles
@@ -25,7 +25,7 @@ def TiltAngleOrganizer():
     import subprocess as sp
     
     # Testing/Debugging Lines
-    #"""
+    """
     inputPath = "/home/jmyers/Documents/testFolder/NonUnique"
     etomoSelect = False
     """
@@ -35,7 +35,7 @@ def TiltAngleOrganizer():
     if len(sys.argv) == 3:
         etomoSelect = bool(int(sys.argv[2]))
     else:
-        etomoSelect = False"""
+        etomoSelect = False
     
     # Regular Expression and Parsing Format:
     # PNCC/SerialEM Format: Base_GridNum_NavID_ImageNum_Angle_<Date_Time>.Extension (0245)
@@ -77,18 +77,18 @@ def TiltAngleOrganizer():
     # Run Efficient Sorting Routine
     if dataLen == angleNum:
         # Sort Files by Angle Without Latest Image Recording
-        sortedAngleIndex = sorted(range(dataLen),key=lambda x:allAngles[x])
+        angleSortedAngleIndex = sorted(range(dataLen),key=lambda x:allAngles[x])
     else:
         # Sort Files by Angle Using Latest Image Recording
-        sortedAngleIndex = []
+        angleSortedAngleIndex = []
         for uniqueAngle in uniqueAngles:
             angleIndices = [index for index,angle in enumerate(allAngles) if angle == uniqueAngle]
             angleDates = [allDates[index] for index in angleIndices]
-            sortedAngleIndex.append(allDates.index(max(angleDates)))
-    sortedFiles = [dataFiles[index] for index in sortedAngleIndex]
+            angleSortedAngleIndex.append(allDates.index(max(angleDates)))
+    angleSortedFiles = [dataFiles[index] for index in angleSortedAngleIndex]
     
     # Sort Angles by Earliest Image Recording
-    uniqueDates = [allDates[index] for index in sortedAngleIndex]
+    uniqueDates = [allDates[index] for index in angleSortedAngleIndex]
     doseSortedAngleIndex = sorted(range(angleNum),key=lambda x:uniqueDates[x])
     doseSortedAngles = [uniqueAngles[index] for index in doseSortedAngleIndex]
     
@@ -102,10 +102,12 @@ def TiltAngleOrganizer():
     
     imodInputFileName = f"{base}_{navID}.txt"
     tiltOutputFileName = f"tilt{navID}.rawtlt"
+    orderOutputFileName = f"tilt{navID}.order"
     stackOutputFileName = f"tilt{navID}.st"
     
     imodInputFilePath = os.path.join(inputPath,newDirName,imodInputFileName)
     tiltOutputFilePath = os.path.join(inputPath,newDirName,tiltOutputFileName)
+    orderOutputFilePath = os.path.join(inputPath,newDirName,orderOutputFileName)
     stackOutputFilePath = os.path.join(inputPath,newDirName,stackOutputFileName)
     
     # Write Raw Tilt File for IMOD/Etomo
@@ -113,11 +115,16 @@ def TiltAngleOrganizer():
     tiltOutputFile.write("\n".join([str(a) for a in uniqueAngles]))
     tiltOutputFile.close()
     
+    # Write Order File for emClarity
+    orderOutputFile = open(orderOutputFilePath,'w')
+    orderOutputFile.write("\n".join([str(a) for a in doseSortedAngles]))
+    orderOutputFile.close()
+    
     # Write To Text File For IMOD
     imodInputFile = open(imodInputFilePath,'w')
     imodInputFile.write(str(angleNum))
     imodInputFile.write("\n")
-    for file in sortedFiles:
+    for file in angleSortedFiles:
         imodInputFile.write(file)
         imodInputFile.write("\n")
         imodInputFile.write("/")
