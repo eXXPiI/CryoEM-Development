@@ -8,10 +8,11 @@
 # Purpose: Builds angle sorted image stack of form .st from .mrc images of 
 tomography samples for IMOD tomogram reconstruction.
 # Imports: sys, re (regular expression), os (operating system), and subprocess.
-# Inputs/Arguments: Non-optional global .mrc image data directory path. Optional 
-IMOD/Etomo start boolean for completed stack.
+# Inputs/Arguments: Non-optional global .mrc image data directory path. 
+Optional IMOD/Etomo start boolean for completed stack.
 # Outputs/Returns: Angle sorted stack (.st) in optional directory path or
-image data directory. Sorted angle .rawtlt file and sorted data intermediate file.
+image data directory. Sorted angle .rawtlt file and sorted data intermediate 
+file.
 """
 
 ## Articles
@@ -24,8 +25,8 @@ def TiltAngleOrganizer():
     import subprocess as sp
     
     # Testing/Debugging Lines
-    """
-    inputPath = "/home/jmyers/Documents/testFolder/PNCC_Format"
+    #"""
+    inputPath = "/home/jmyers/Documents/testFolder/NonUnique"
     etomoSelect = False
     """
     
@@ -34,7 +35,7 @@ def TiltAngleOrganizer():
     if len(sys.argv) == 3:
         etomoSelect = bool(int(sys.argv[2]))
     else:
-        etomoSelect = False
+        etomoSelect = False"""
     
     # Regular Expression and Parsing Format:
     # PNCC/SerialEM Format: Base_GridNum_NavID_ImageNum_Angle_<Date_Time>.Extension (0245)
@@ -60,13 +61,13 @@ def TiltAngleOrganizer():
     
     # Parse Filename Metadata
     dataInfo = []
-    for i in range(dataLen):
-        dataInfo.append(patternFinder.findall(dataFiles[i])[0])
+    for file in dataFiles:
+        dataInfo.append(patternFinder.findall(file)[0])
 
     # Extract All Image Dates
     allDates = []
-    for i in range(dataLen):
-        allDates.append(dt.datetime.strptime(dataInfo[i][timeLocation],parseFormat))
+    for fileInfo in dataInfo:
+        allDates.append(dt.datetime.strptime(fileInfo[timeLocation],parseFormat))
     
     # Determine Efficient Angle Sorting Routine
     allAngles = [float(val[angleLocation]) for val in dataInfo]
@@ -85,6 +86,11 @@ def TiltAngleOrganizer():
             angleDates = [allDates[index] for index in angleIndices]
             sortedAngleIndex.append(allDates.index(max(angleDates)))
     sortedFiles = [dataFiles[index] for index in sortedAngleIndex]
+    
+    # Sort Angles by Earliest Image Recording
+    uniqueDates = [allDates[index] for index in sortedAngleIndex]
+    doseSortedAngleIndex = sorted(range(angleNum),key=lambda x:uniqueDates[x])
+    doseSortedAngles = [uniqueAngles[index] for index in doseSortedAngleIndex]
     
     # Define Output Variables
     # Selects Information from First File
@@ -111,8 +117,8 @@ def TiltAngleOrganizer():
     imodInputFile = open(imodInputFilePath,'w')
     imodInputFile.write(str(angleNum))
     imodInputFile.write("\n")
-    for index in range(angleNum):
-        imodInputFile.write(sortedFiles[index])
+    for file in sortedFiles:
+        imodInputFile.write(file)
         imodInputFile.write("\n")
         imodInputFile.write("/")
         imodInputFile.write("\n")
