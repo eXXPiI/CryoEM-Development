@@ -4,7 +4,7 @@
 # Version: 0.1.0
 # Author: Jonathan Myers
 # Date Created: Mon Aug 23 16:53:57 2021
-# Date Modified: Dec 9 2021
+# Date Modified: Dec 10 2021
 # Purpose: Builds angle sorted image stack of form .st from .mrc images of 
 tomography samples for IMOD tomogram reconstruction.
 # Imports: sys, re (regular expression), os (operating system), and subprocess.
