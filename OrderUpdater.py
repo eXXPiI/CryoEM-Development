@@ -4,11 +4,12 @@
 # Version: 0.0.1
 # Author: Jonathan Myers
 # Date Created: Thu Dec  9 15:04:48 2021
-# Date Modified: Dec 9 2021
-# Purpose: 
-# Imports: 
-# Inputs/Arguments: 
-# Outputs/Returns: 
+# Date Modified: Dec 10 2021
+# Purpose: Generate true recorded angle .order file for later emClarity
+processing. Code can run without shell call.
+# Imports: sys, os (operating system)
+# Inputs/Arguments: Requires main image dataset directory path.
+# Outputs/Returns: Generates .order file in relevant Tomo subdirectory.
 """
 
 ## Articles
