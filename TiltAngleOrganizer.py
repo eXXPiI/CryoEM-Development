@@ -11,8 +11,8 @@ tomography samples for IMOD tomogram reconstruction.
 # Inputs/Arguments: Non-optional global .mrc image data directory path. 
 Optional IMOD/Etomo start boolean for completed stack.
 # Outputs/Returns: Angle sorted stack (.st) in Tomo sub-directory located in
-image data directory. Sorted angle .rawtlt file, dose sorted angles in .order 
-file, and sorted data intermediate file.
+image data directory. Sorted angle .rawtlt file, dose sorted angles in 
+.raworder file, and sorted data intermediate file.
 """
 
 ## Articles
@@ -102,7 +102,7 @@ def TiltAngleOrganizer():
     
     imodInputFileName = f"{base}_{navID}.txt"
     tiltOutputFileName = f"tilt{navID}.rawtlt"
-    orderOutputFileName = f"tilt{navID}.order"
+    orderOutputFileName = f"tilt{navID}.raworder"
     stackOutputFileName = f"tilt{navID}.st"
     
     imodInputFilePath = os.path.join(inputPath,newDirName,imodInputFileName)
