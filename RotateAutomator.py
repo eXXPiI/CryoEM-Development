@@ -16,23 +16,9 @@ Original image file renamed to <original>~ in same directory.
 
 ## Articles
 
-def RotateAutomator():
-    import sys
+def RotateAutomator(inputPath,angleSelect):
     import os
     import subprocess as sp
-    
-    # Testing/Debugging Lines
-    """
-    inputPath = "/home/jmyers/Documents/testFolder/Rotate"
-    angleSelect = 90
-    """
-    
-    # Define Input Variables
-    inputPath = str(sys.argv[1])
-    if len(sys.argv) == 3:
-        angleSelect = int(sys.argv[2])
-    else:
-        angleSelect = 90
     
     # Acquire Subdirectories From Directory
     dataDirectory = os.chdir(inputPath)
@@ -53,6 +39,22 @@ def RotateAutomator():
 
 # If Code Independent, Run; If Code Imported, Do Not Run
 if __name__ == '__main__':
-    RotateAutomator()
+    import sys
+    
+    # Testing/Debugging Lines
+    """
+    inputPath = "/home/jmyers/Documents/testFolder/Rotate"
+    angleSelect = 90
+    """
+    
+    # Define Input Variables
+    inputPath = str(sys.argv[1])
+    if len(sys.argv) == 3:
+        angleSelect = int(sys.argv[2])
+    else:
+        angleSelect = 90
+    
+    # Main Script Run
+    RotateAutomator(inputPath,angleSelect)
 
 # M02 End Program

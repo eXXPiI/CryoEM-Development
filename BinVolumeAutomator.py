@@ -15,24 +15,10 @@ binning dimension specification.
 
 ## Articles
 
-def BinVolumeAutomator():
-    import sys
+def BinVolumeAutomator(inputPath,binSelect):
     import re
     import os
     import subprocess as sp
-    
-    # Testing/Debugging Lines
-    """
-    inputPath = "/home/jmyers/Documents/testFolder/PNCC_Format/Tomo"
-    binSelect = 2
-    """
-    
-    # Define Input Variables
-    inputPath = str(sys.argv[1])
-    if len(sys.argv) == 3:
-        binSelect = int(sys.argv[2])
-    else:
-        binSelect = 2
     
     # Regular Expression And Parsing Format:
     # emClarity Format: tilt<NavID>_Suffix.Extension
@@ -78,6 +64,22 @@ def BinVolumeAutomator():
 
 # If Code Independent, Run; If Code Imported, Do Not Run
 if __name__ == '__main__':
-    BinVolumeAutomator()
+    import sys
+    
+    # Testing/Debugging Lines
+    """
+    inputPath = "/home/jmyers/Documents/testFolder/PNCC_Format/Tomo"
+    binSelect = 2
+    """
+    
+    # Define Input Variables
+    inputPath = str(sys.argv[1])
+    if len(sys.argv) == 3:
+        binSelect = int(sys.argv[2])
+    else:
+        binSelect = 2
+    
+    # Main Script Run
+    BinVolumeAutomator(inputPath,binSelect)
 
 # M02 End Program

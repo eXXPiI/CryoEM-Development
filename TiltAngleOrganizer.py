@@ -17,25 +17,11 @@ image data directory. Sorted angle .rawtlt file, dose sorted angles in
 
 ## Articles
 
-def TiltAngleOrganizer():
-    import sys
+def TiltAngleOrganizer(inputPath,etomoSelect):
     import re
     import os
     import datetime as dt
     import subprocess as sp
-    
-    # Testing/Debugging Lines
-    """
-    inputPath = "/home/jmyers/Documents/testFolder/NonUnique"
-    etomoSelect = False
-    """
-    
-    # Define Input Variables
-    inputPath = str(sys.argv[1])
-    if len(sys.argv) == 3:
-        etomoSelect = bool(int(sys.argv[2]))
-    else:
-        etomoSelect = False
     
     # Regular Expression and Parsing Format:
     # PNCC/SerialEM Format: Base_GridNum_NavID_ImageNum_Angle_<Date_Time>.Extension (0245)
@@ -142,6 +128,22 @@ def TiltAngleOrganizer():
     
 # If Code Independent, Run; If Code Imported, Do Not Run
 if __name__ == '__main__':
-    TiltAngleOrganizer()
+    import sys
+    
+    # Testing/Debugging Lines
+    """
+    inputPath = "/home/jmyers/Documents/testFolder/NonUnique"
+    etomoSelect = False
+    """
+    
+    # Define Input Variables
+    inputPath = str(sys.argv[1])
+    if len(sys.argv) == 3:
+        etomoSelect = bool(int(sys.argv[2]))
+    else:
+        etomoSelect = False
+    
+    # Main Script Run
+    TiltAngleOrganizer(inputPath,etomoSelect)
 
 # M02 End Program

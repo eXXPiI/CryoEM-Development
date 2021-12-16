@@ -78,9 +78,16 @@ def OrderUpdater(inputPath):
 # If Code Independent, Run; If Code Imported, Do Not Run
 if __name__ == '__main__':
     import sys
+    
+    # Testing/Debugging Lines
+    """
+    inputPath = "/home/jmyers/Documents/testFolder/NavID_Group"
+    """
+    
     # Define Input Variables
     inputPath = str(sys.argv[1])
-    #inputPath = "/home/jmyers/Documents/testFolder/NavID_Group"
+    
+    # Main Script Run
     OrderUpdater(inputPath)
 
 # M02 End Program
