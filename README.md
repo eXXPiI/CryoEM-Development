@@ -53,9 +53,9 @@ An output file is generated and saved into the data directory.
 Some processes are worth developing into automated scripts but others sometimes are not.
 These programs may be useful to standardize and speed up the generation of publication-grade graphics.
 
-## Visualize Euler Angles From 3D Polar Plot
+### Visualize Euler Angles From 3D Polar Plot
 Generate polar plot of all particle angles to see angle distribution.
-This may be accomplished within cryoSPARC or may be developed.
+This may be accomplished within cryoSPARC or may be need to be developed.
 
 ### Visualize Particles From emClarity with IMOD
 An average particle can be visualized on a tomogram using a few different tools.
