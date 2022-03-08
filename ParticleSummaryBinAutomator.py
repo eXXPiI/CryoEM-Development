@@ -36,9 +36,9 @@ def ParticleSummaryBinAutomator(inputPath,outoutPath,binSelect):
 if __name__ == '__main__':
     
     # Define Input Variables
-    inputPath = "/home/jmyers/Documents/FHV_Crown/Structure/AR49_Segmentation/ParticleSummaryM.csv"
-    outputPath = "/home/jmyers/Documents/FHV_Crown/Structure/AR49_Segmentation/ParticleSummaryM-bin6.csv"
-    binSelect = 6
+    inputPath = "/home/jmyers/Documents/FHV_Crown/Structure/N49_Segmentation/ParticleSummary.csv"
+    outputPath = "/home/jmyers/Documents/FHV_Crown/Structure/N49_Segmentation/ParticleSummary-bin3.csv"
+    binSelect = 3
 
     # Main Script Run
     ParticleSummaryBinAutomator(inputPath,outputPath,binSelect)
