@@ -1,11 +1,11 @@
 ## Preamble
 """
 # Program: ParticleSummaryBinAutomator.py
-# Version: 0.0.0
+# Version: 0.0.1
 # Author: Jonathan Myers
 # Date Created: Thu Mar  3 15:29:15 2022
-# Date Modified: Mar 3 2022
-# Purpose: 
+# Date Modified: Mar 7 2022
+# Purpose: Generate Binned particle sumamry file for IMOD visualization.
 # Imports: 
 # Inputs/Arguments: 
 # Outputs/Returns: 
