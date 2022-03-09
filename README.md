@@ -1,7 +1,11 @@
 # CryoEM-Development
 CryoEM image processing software development repository.
 
-## TiltAngleOrganizer Script
+## Script Usage
+Many of the scripts developed within this repository are intended to both speed up and improve the consistency of the processing of tomography datasets.
+Some of the scripts are also intended to function as intermediates between emClarity and IMOD processing workflows.
+
+### TiltAngleOrganizer Script
 This script is intended to be used in a CLI. 
 Navigate to the directory containing this file and open a terminal there. 
 Then type "python TiltAngleOrganizer.py <Global/Path/To/Data> [1 or 0]." 
@@ -13,7 +17,7 @@ The optional input determines if the resulting organized MRC file based stack is
 Without an optional argument, 3dmond is not opened. 
 This script builds a sub-directory called "Tomo" where output files are generated.
 
-## BinVolumeAutomator Script
+### BinVolumeAutomator Script
 This script is intended to be used in a CLI. 
 Navigate to the directory containing this file and open a terminal there. 
 Then type "python BinVolumeAutomator.py <Global/Path/To/Data> [Integer]." 
@@ -22,7 +26,7 @@ Other files may be present as they are automatically sorted out from the reconst
 The optional argument determines the uniform 3D binning parameter (e.g. 1 ==> 1X1X1 and 2 ==> 2X2X2). 
 If the optional argument is not provided, the program defaults to a binning of 2 which reduces the image size by a factor of 8.
 
-## RotateAutomator Script
+### RotateAutomator Script
 This script is intended to be used in a CLI. 
 Navigate to the directory containing this file and open a terminal there. 
 Then type "python RotateAutomator.py <Global/Path/To/Data> [Float]." 
@@ -31,7 +35,7 @@ Other files may be present as they are ignored based on the naming scheme consis
 The optional argument determines the rotation angle in degrees that are consistent with the crossproduct (i.e. (+) ==> CCW and (-) ==> CW). 
 If the optional argument is not provided, the program defaults to a rotation of 90 degrees.
 
-## OrderUpdater Script
+### OrderUpdater Script
 This script is intended to be used in a CLI. 
 Navigate to the directory containing this file and open a terminal there. 
 Then type "python OrderUpdater.py <Global/Path/To/Data>." 
@@ -39,7 +43,7 @@ Here, the data path must end in a directory that contains partitioned target ima
 Other files may be present as they are ignored based on the naming scheme consistent with emClarity. 
 This script then generates an .order file with the actual tomography angles for later use in emClarity image processing.
 
-## FSC Plotter Script
+### FSC Plotter Script
 This script is intended to be used in a CLI.
 Navigate to the directory containing this file and open a terminal there.
 Then type "python FSCPlotter.py <Global/Path/To/Data> <format>" where the format is generally either "png" or "pdf."
