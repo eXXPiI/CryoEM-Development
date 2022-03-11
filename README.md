@@ -4,6 +4,8 @@ CryoEM image processing software development repository.
 ## Script Usage
 Many of the scripts developed within this repository are intended to both speed up and improve the consistency of the processing of tomography datasets.
 Some of the scripts are also intended to function as intermediates between emClarity and IMOD processing workflows.
+IMOD (recent but unspecified), PEET (v1.15.x or later), and emClarity (recent but unspecified) are all required to be installed on the machine running these scripts.
+Python 3 (3.8.8 Anaconda used by author) is also assumed to be installed and working with numpy.
 
 ### TiltAngleOrganizer Script
 This script is intended to be used in a CLI. 
@@ -59,6 +61,7 @@ Navigate to the directory containing this file and open a terminal there.
 Then type "python ParticleSummaryGenerator.py <Global/Path/To/Data> Integer."
 Here, that data path must end in a directory that contains the target particle motive list analog from emClarity.
 That file is, by default, anticipated to be called "Particle.csv" but can be of another name.
+That file may be extracted from the convmap directory or from the MAT metadata file.
 Other files can be present, but they must not be CSV files if there is not a specific "Particle.csv" within the directory.
 If there is a CSV file present without being named "Particle.csv" it will be used as the input data.
 The output files, including CSV files, of the script are ignored and can be present even if there is no specifically named "Particle.csv."
