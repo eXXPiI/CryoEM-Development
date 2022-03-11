@@ -9,7 +9,7 @@
 motive list analog. This script can also be adjusted to work with PEET motive
 lists directly. The particle proection from IMOD clonemodel is also run if the
 particle model file is present.
-# Imports: sys, os (operating system), numpy, subprocess
+# Imports: sys, os (operating system), numpy, and subprocess
 # Inputs/Arguments: Non-optional global .csv particle data directory file path.
 Non-optional binning factor.
 # Outputs/Returns: Euler and slicer angle files, particle summary, and 

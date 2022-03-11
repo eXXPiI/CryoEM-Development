@@ -55,7 +55,9 @@ An output file is generated and saved into the data directory.
 
 ### ParticleSummaryGenerator Script
 This script is intended to be used in a CLI.
-More To Come.
+Navigate to the directory containing this file and open a terminal there.
+Then type "python ParticleSummaryGenerator.py <Global/Path/To/Data/File> [Integer]."
+
 
 ## Code To Be Developed In Future
 Some processes are worth developing into automated scripts but others sometimes are not.
