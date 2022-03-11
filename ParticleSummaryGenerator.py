@@ -23,8 +23,19 @@ def ParticleSummaryGenerator(inputPath,binSelect):
     import numpy as np
     import subprocess as sp
     
-    # Move To Relevant Directory
-    os.chdir(os.path.dirname(inputPath))
+    # Define Produced Files
+    eulerFileName = "EulerAngles.csv"
+    slicerFileName = "SlicerAngles.csv"
+    summaryFileName = "ParticleSummary.csv"
+    
+    # Move To Relevant Directory And Find Relevant CSV File
+    dataDirectory = os.chdir(inputPath)
+    dataFiles = os.listdir(dataDirectory)
+    if dataFiles.count(newDirName) > 0:
+        dataFiles.remove(newDirName)
+    else:
+        os.mkdir(newDirName)
+    dataLen = len(dataFiles)
     
     # Import Particle Motive List Analog
     inputData = np.loadtxt(inputPath,delimiter=',')
@@ -47,8 +58,6 @@ def ParticleSummaryGenerator(inputPath,binSelect):
             coordinatesBin[particle,column] = coordinates[particle,column]/binSelect
     
     # Prepare Euler Angles File For PEET MOTL2Slicer Script
-    eulerFileName = "EulerAngles.csv"
-    slicerFileName = "SlicerAngles.csv"
     eulerFormatter = ['%.6f','%.6f','%.6f']
     np.savetxt(eulerFileName,eulerAngles,fmt=eulerFormatter,delimiter=',')
     
@@ -71,7 +80,6 @@ def ParticleSummaryGenerator(inputPath,binSelect):
     summary[:,(4,5,6)] = slicerAngles
     
     # Generate Particle Summary File
-    summaryFileName = "ParticleSummary.csv"
     info = "#contour,X,Y,Z,xAngle,yAngle,zAngle"
     reduce = ['%.0f','%.6f','%.6f','%.6f','%.6f','%.6f','%.6f']
     np.savetxt(summaryFileName,summary,fmt=reduce,delimiter=',',header=info,comments='')
