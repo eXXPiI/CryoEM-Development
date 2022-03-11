@@ -56,8 +56,15 @@ An output file is generated and saved into the data directory.
 ### ParticleSummaryGenerator Script
 This script is intended to be used in a CLI.
 Navigate to the directory containing this file and open a terminal there.
-Then type "python ParticleSummaryGenerator.py <Global/Path/To/Data/File> [Integer]."
-Here, that data path must end in the file 
+Then type "python ParticleSummaryGenerator.py <Global/Path/To/Data> Integer."
+Here, that data path must end in a directory that contains the target particle motive list analog from emClarity.
+That file is, by default, anticipated to be called "Particle.csv" but can be of another name.
+Other files can be present, but they must not be CSV files if there is not a specific "Particle.csv" within the directory.
+If there is a CSV file present without being named "Particle.csv" it will be used as the input data.
+The output files, including CSV files, of the script are ignored and can be present even if there is no specifically named "Particle.csv."
+The other non-optional argument is the binning of the visualization tomogram.
+If a "Particle.mod" file is present, the IMOD clonemodel script will also be run to generate a final particle projection.
+"Particle.mod" must be processed by binning (at the same factor as the visualization tomogram) a reconstruction using the emClarity "rescale" command and then converting to an isosurface within IMOD.
 
 ## Code To Be Developed In Future
 Some processes are worth developing into automated scripts but others sometimes are not.
