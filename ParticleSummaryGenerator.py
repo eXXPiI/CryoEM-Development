@@ -9,7 +9,8 @@
 motive list analog. This script can also be adjusted to work with PEET motive
 lists directly. The particle proection from IMOD clonemodel is also run if the
 particle model file is present.
-# Imports: sys, os (operating system), numpy, and subprocess
+# Imports: sys, re (regular expression), os (operating system), numpy, and 
+subprocess
 # Inputs/Arguments: Non-optional global .csv particle data directory file path.
 Non-optional binning factor.
 # Outputs/Returns: Euler and slicer angle files, particle summary, and 
@@ -19,26 +20,61 @@ particle projection if model exists; all in parent directory.
 ## Articles
 
 def ParticleSummaryGenerator(inputPath,binSelect):
+    import sys
+    import re
     import os
     import numpy as np
     import subprocess as sp
     
-    # Define Produced Files
+    # Define Necessary Produced Files
     eulerFileName = "EulerAngles.csv"
     slicerFileName = "SlicerAngles.csv"
     summaryFileName = "ParticleSummary.csv"
+    generatedFiles = (eulerFileName,slicerFileName,summaryFileName)
     
-    # Move To Relevant Directory And Find Relevant CSV File
+    # Regular Expression And Parsing Format:
+    # emClarity Format: cycle<iter>_<subTomoMeta>_<suffix>-fsc_GLD.txt
+    mainRegEx = ['([a-zA-Z0-9-_]*)','.csv']
+    mainPatternFinder = re.compile(''.join(mainRegEx))
+    
+    # Acquire Files From Directory and Parse Filename Metadata
     dataDirectory = os.chdir(inputPath)
-    dataFiles = os.listdir(dataDirectory)
-    if dataFiles.count(newDirName) > 0:
-        dataFiles.remove(newDirName)
+    allFiles = os.listdir(dataDirectory)
+    dataInfo = []
+    dataFiles = []
+    
+    # Obtain Relevant CSV File
+    if "Particle.csv" in allFiles:
+        dataFiles = ["Particle.csv"]
     else:
-        os.mkdir(newDirName)
-    dataLen = len(dataFiles)
+        # Regular Expression And Parsing Format:
+        # emClarity Format: *.csv
+        mainRegEx = ['([a-zA-Z0-9-_]*)','.csv']
+        mainPatternFinder = re.compile(''.join(mainRegEx))
+        
+        for file in allFiles:
+            if file not in generatedFiles:
+                try:
+                    fileName = mainPatternFinder.findall(file)[0]
+                    dataInfo.append(fileName)
+                    dataFiles.append(file)
+                except IndexError:
+                    # No Computation Time Dedicated To Non-Scheme Files
+                    pass
+            else:
+                continue
+        
+        # Verify Only One Relevant CSV File
+        fileNum = len(dataFiles)
+        if fileNum > 1:
+            sys.exit("Ambiguous CSV files found. Unable to extract information.")
+        elif fileNum == 0:
+            sys.exit("No usable CSV file found. Unable to extract information.")
+        else:
+            pass
     
     # Import Particle Motive List Analog
-    inputData = np.loadtxt(inputPath,delimiter=',')
+    inputData = np.loadtxt(dataFiles[0],delimiter=',')
     dataLen = np.size(inputData,axis=0)
     
     # Extract Particle Coordinates (PEET And emClarity -> (10,11,12))
@@ -102,7 +138,7 @@ if __name__ == '__main__':
     
     # Testing/Debugging Lines
     """
-    inputPath = "/home/jmyers/Documents/testFolder/ParticleSummary/tilt70_1_bin6.csv"
+    inputPath = "/home/jmyers/Documents/testFolder/ParticleSummary"
     binSelect = 6
     """
     
