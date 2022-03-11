@@ -28,7 +28,6 @@ def ParticleSummaryBinAutomator(inputPath,outoutPath,binSelect):
     # Generate New Binned Summary File
     info = "#contour,X,Y,Z,xAngle,yAngle,zAngle"
     reduce = ['%.0f','%.6f','%.6f','%.6f','%.6f','%.6f','%.6f']
-    #reduce = ['%.0f + %dj','%f + %dj','%f + %dj','%f + %dj','%f + %dj','%f + %dj','%f + %dj']
     np.savetxt(outputPath,inputData,fmt=reduce,delimiter=',',header=info,comments='')
     
     

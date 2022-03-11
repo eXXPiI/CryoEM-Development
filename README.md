@@ -43,7 +43,7 @@ Here, the data path must end in a directory that contains partitioned target ima
 Other files may be present as they are ignored based on the naming scheme consistent with emClarity. 
 This script then generates an .order file with the actual tomography angles for later use in emClarity image processing.
 
-### FSC Plotter Script
+### FSCPlotter Script
 This script is intended to be used in a CLI.
 Navigate to the directory containing this file and open a terminal there.
 Then type "python FSCPlotter.py <Global/Path/To/Data> <format>" where the format is generally either "png" or "pdf."
@@ -52,6 +52,10 @@ That file is read and others are ignored to produce a plot of the FSC curve.
 The file is universally modular with the first column consisting of the spatial frequency components and the second column representing the FSC value.
 Any additional columns are ignored but can easily be implemented into additional code.
 An output file is generated and saved into the data directory.
+
+### ParticleSummaryGenerator Script
+This script is intended to be used in a CLI.
+More To Come.
 
 ## Code To Be Developed In Future
 Some processes are worth developing into automated scripts but others sometimes are not.
@@ -73,3 +77,6 @@ Particle coordinates are directly copied into a new summary file that will be la
 Particle Euler angles (within their own CSV) are then fed directly into the PEET MOTL2Slicer script.
 The output slicer angles are then copied directly into the particle summary with the xAngles being negated.
 The IMOD clonemodel script can then be used to project the model reconstruction directly onto the tomogram according to the particle summary.
+To generate a binned particle that can be used for visualization in binned tomograms, it is best to use the rescale function within emClarity.
+
+M02 End Program
