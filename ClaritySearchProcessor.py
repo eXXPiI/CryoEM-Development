@@ -67,7 +67,7 @@ if __name__ == '__main__':
     import sys
     
     # Testing/Debugging Lines
-    #"""
+    """
     inputPath = "/home/jmyers/Documents/testFolder/TemplateProcessing"
     sValueSelect = 1
     """
@@ -78,7 +78,7 @@ if __name__ == '__main__':
         sValueSelect = int(sys.argv[2])
     else:
         sValueSelect = 1
-    """
+    
     # Main Script Run
     RotateAutomator(inputPath,sValueSelect)
 
