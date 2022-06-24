@@ -4,7 +4,7 @@
 # Version: 0.0.1
 # Author: Jonathan Myers
 # Date Created: Thu Jun 23 14:57:49 2022
-# Date Modified: Jun 23 2022
+# Date Modified: Jun 24 2022
 # Purpose: Flip pixel values from emClarity output and process using
 TomoSegMemTV script scale_space to enhance image clarity.
 # Imports: sys, re (regular expression), os (operating system), and subprocess.
@@ -22,7 +22,7 @@ def RotateAutomator(inputPath,sValueSelect):
     
     # Regular Expression And Parsing Format:
     # Filename Format: tilt<NavID>_Suffix.Extension
-    mainRegEx = ['tilt','([0-9]+)[_]?','([a-zA-Z0-9-_]*)',
+    mainRegEx = ['tilt','([0-9]+)[_]?','([a-zA-Z0-9-_]*?)','(?:_s([0-9]*))?',
              '[.](mrc|rec)']
     mainPatternFinder = re.compile(''.join(mainRegEx))
     
@@ -34,8 +34,10 @@ def RotateAutomator(inputPath,sValueSelect):
     imageFiles = []
     for file in allFiles:
         try:
-            imageInfo.append(mainPatternFinder.findall(file)[0])
-            imageFiles.append(file)
+            metaInfo = mainPatternFinder.findall(file)[0]
+            if metaInfo[2] == '':
+                imageInfo.append(metaInfo)
+                imageFiles.append(file)
         except IndexError:
             # No Computation Time Dedicated To Non-Scheme Files
             pass
@@ -65,7 +67,7 @@ if __name__ == '__main__':
     import sys
     
     # Testing/Debugging Lines
-    """
+    #"""
     inputPath = "/home/jmyers/Documents/testFolder/TemplateProcessing"
     sValueSelect = 1
     """
@@ -76,7 +78,7 @@ if __name__ == '__main__':
         sValueSelect = int(sys.argv[2])
     else:
         sValueSelect = 1
-    
+    """
     # Main Script Run
     RotateAutomator(inputPath,sValueSelect)
 

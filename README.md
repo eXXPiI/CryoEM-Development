@@ -69,6 +69,10 @@ The other non-optional argument is the binning of the visualization tomogram.
 If a "Particle.mod" file is present, the IMOD clonemodel script will also be run to generate a final particle projection.
 "Particle.mod" must be processed by binning (at the same factor as the visualization tomogram) a reconstruction using the emClarity "rescale" command and then converting to an isosurface within IMOD.
 
+### ClaritySearchProcessor Script
+This script is intended to be used in a CLI.
+
+
 ## Code To Be Developed In Future
 Some processes are worth developing into automated scripts but others sometimes are not.
 These programs may be useful to standardize and speed up the generation of publication-grade graphics.
