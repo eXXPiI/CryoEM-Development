@@ -9,8 +9,9 @@
 TomoSegMemTV script scale_space to enhance image clarity.
 # Imports: sys, re (regular expression), os (operating system), and subprocess.
 # Inputs/Arguments: Tomogram dataset directory path and optional s-value for 
-image enhancement. If no value is supplied, 1 is chosen.
-# Outputs/Returns: A pixel inverted tomogrtam with contrast enhancement.
+image enhancement. If no value is supplied, 1 is chosen. Works with additional 
+files in directory and will generate files even if run more than once.
+# Outputs/Returns: A pixel inverted tomogram file with contrast enhancement.
 """
 
 ## Articles
