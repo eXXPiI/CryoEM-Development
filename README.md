@@ -5,6 +5,7 @@ CryoEM image processing software development repository.
 Many of the scripts developed within this repository are intended to both speed up and improve the consistency of the processing of tomography datasets.
 Some of the scripts are also intended to function as intermediates between emClarity and IMOD processing workflows.
 IMOD (recent but unspecified), PEET (v1.15.x or later), and emClarity (recent but unspecified) are all required to be installed on the machine running these scripts.
+TomoSegMemTV is also required for some processing.
 Python 3 (3.8.8 Anaconda used by author) is also assumed to be installed and working with numpy.
 
 ### TiltAngleOrganizer Script
