@@ -10,7 +10,8 @@ TomoSegMemTV script scale_space to enhance image clarity.
 # Imports: sys, re (regular expression), os (operating system), and subprocess.
 # Inputs/Arguments: Tomogram dataset directory path and optional s-value for 
 image enhancement. If no value is supplied, 1 is chosen. Works with additional 
-files in directory and will generate files even if run more than once.
+files in directory and will generate files even if run more than once. s-value 
+of -1 results in no scale space performed.
 # Outputs/Returns: A pixel inverted tomogram file with contrast enhancement.
 """
 
@@ -57,10 +58,11 @@ def RotateAutomator(inputPath,sValueSelect):
                                 "-in",imageFiles[i],"-ou",outputImages[i]])
         sp.run(invertCommand,shell=True)
     
-    for i in range(imageFileNumber):
-        enhanceCommand = " ".join(["scale_space","-s",str(sValueSelect),
-                                   outputImages[i],outputImages[i]])
-        sp.run(enhanceCommand,shell=True)
+    if sValueSelect != -1:
+        for i in range(imageFileNumber):
+            enhanceCommand = " ".join(["scale_space","-s",str(sValueSelect),
+                                       outputImages[i],outputImages[i]])
+            sp.run(enhanceCommand,shell=True)
         
 
 # If Code Independent, Run; If Code Imported, Do Not Run
