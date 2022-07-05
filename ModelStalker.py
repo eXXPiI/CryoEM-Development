@@ -45,7 +45,12 @@ def ModelStalker(inputPath):
     for file in imageFiles:
         stalkCommand = " ".join(["stalkInit",file])
         sp.run(stalkCommand,shell=True)
-        
+    
+    # Remove Overwrritten Files
+    os.remove("head.mod")
+    os.remove("tail.mod")
+    os.remove("centroid.mod")
+
 
 # If Code Independent, Run; If Code Imported, Do Not Run
 if __name__ == '__main__':
