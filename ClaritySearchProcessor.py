@@ -4,7 +4,7 @@
 # Version: 0.0.1
 # Author: Jonathan Myers
 # Date Created: Thu Jun 23 14:57:49 2022
-# Date Modified: Jun 24 2022
+# Date Modified: Jul 5 2022
 # Purpose: Flip pixel values from emClarity output and process using
 TomoSegMemTV script scale_space to enhance image clarity.
 # Imports: sys, re (regular expression), os (operating system), and subprocess.
@@ -17,7 +17,7 @@ of -1 results in no scale space performed.
 
 ## Articles
 
-def RotateAutomator(inputPath,sValueSelect):
+def ClaritySearchProcessor(inputPath,sValueSelect):
     import re
     import os
     import subprocess as sp    
@@ -83,6 +83,6 @@ if __name__ == '__main__':
         sValueSelect = 1
     
     # Main Script Run
-    RotateAutomator(inputPath,sValueSelect)
+    ClaritySearchProcessor(inputPath,sValueSelect)
 
 # M02 End Program
