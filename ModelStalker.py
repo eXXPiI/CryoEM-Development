@@ -70,13 +70,13 @@ if __name__ == '__main__':
     import sys
     
     # Testing/Debugging Lines
-    #"""
+    """
     inputPath = "/home/jmyers/Documents/testFolder/TemplateProcessing"
     """
     
     # Define Input Variables
     inputPath = str(sys.argv[1])
-    """
+    
     # Main Script Run
     ModelStalker(inputPath)
 
