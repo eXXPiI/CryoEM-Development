@@ -74,6 +74,7 @@ def ParticleSummaryGenerator(inputPath,binSelect):
             pass
     
     # Import Particle Motive List Analog
+    #inputData = np.loadtxt(dataFiles[0],delimiter=',',skiprows=1)
     inputData = np.loadtxt(dataFiles[0],delimiter=',')
     dataLen = np.size(inputData,axis=0)
     
