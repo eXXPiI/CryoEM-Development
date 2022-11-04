@@ -19,7 +19,7 @@ particle projection if model exists; all in parent directory.
 
 ## Articles
 
-def ParticleSummaryGenerator(inputPath,binSelect):
+def ParticleSummaryGenerator(inputPath,binSelect,methodFlag):
     import sys
     import re
     import os
@@ -84,8 +84,13 @@ def ParticleSummaryGenerator(inputPath,binSelect):
     coordinates = inputData[:,coordinateColumns]
     coordinatesBin = np.zeros([dataLen,coordinatesLen])
     
-    # Extract Particle Euler Angles (PEET -> (16,17,18) And emClarity ->(13,14,15))
-    eulerColumns = (13,14,15)
+    # Extract Particle Euler Angles (PEET -> (16,17,18) And emClarity -> (13,14,15))
+    if methodFlag == "peet":
+        eulerColumns = (16,17,18)
+    elif methodFlag == "emC":
+        eulerColumns = (13,14,15)
+    else:
+        eulerColumns = (13,14,15)
     #eulerLen = len(eulerColumns)
     eulerAngles = inputData[:,eulerColumns]
     
@@ -106,10 +111,14 @@ def ParticleSummaryGenerator(inputPath,binSelect):
     slicerCommand = " ".join(["MOTL2Slicer",eulerFileName,slicerFileName])
     sp.run(slicerCommand,shell=True)
     
-    # Read And Mutate Slicer Angles (X,Y,Z)->(-X,Y,Z)
+    # Read Slicer Angles
     slicerAngles = np.loadtxt(slicerFileName,delimiter=',')
-    for xAngle in range(dataLen):
-        slicerAngles[xAngle,0] = -slicerAngles[xAngle,0]
+    if methodFlag == "peet":
+        pass
+    elif methodFlag == "emC":
+        # Mutate Slicer Angles (X,Y,Z)->(-X,Y,Z)
+        for xAngle in range(dataLen):
+            slicerAngles[xAngle,0] = -slicerAngles[xAngle,0]
     
     # Build Particle Summary
     summary = np.ones([dataLen,7])
@@ -138,16 +147,18 @@ if __name__ == '__main__':
     import sys
     
     # Testing/Debugging Lines
-    """
-    inputPath = "/home/jmyers/Documents/testFolder/ParticleSummary"
+    #"""
+    inputPath = "/home/jmyers/Documents/testFolder/ParticleSummary/emC_convmap"
     binSelect = 6
+    methodFlag = "emC"
     """
     
     # Define Input Variables
     inputPath = str(sys.argv[1])
     binSelect = int(sys.argv[2])
+    methodFlag = str(sys.argv[3])"""
 
     # Main Script Run
-    ParticleSummaryGenerator(inputPath,binSelect)
+    ParticleSummaryGenerator(inputPath,binSelect,methodFlag)
 
 # M02 End Program
